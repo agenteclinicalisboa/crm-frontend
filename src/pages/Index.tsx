@@ -4,6 +4,8 @@ import { Sparkles, Heart, Star, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
+import heroImage from "@/assets/hero-beauty.jpg";
+
 export default function Index() {
   const navigate = useNavigate();
 
@@ -66,7 +68,7 @@ export default function Index() {
           <div className="relative">
             <div className="relative z-10">
               <img
-                src="/api/placeholder/500/600"
+                src={heroImage}
                 alt="Ambiente da clínica"
                 className="rounded-3xl shadow-2xl w-full object-cover"
               />
