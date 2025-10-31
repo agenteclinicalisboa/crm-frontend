@@ -63,6 +63,7 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
               <Calendar className="w-5 h-5 mr-2 text-pink-500" />
               Selecione a data
             </h3>
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {dates.map((date) => (
                 <button

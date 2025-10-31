@@ -50,7 +50,7 @@ export default function Index() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={() => navigate('/booking')}
+                onClick={() => navigate('/agendar')}
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Agendar agora
@@ -123,7 +123,7 @@ export default function Index() {
             size="lg"
             variant="secondary"
             className="bg-white text-pink-600 hover:bg-pink-50 px-8 py-6 rounded-2xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            onClick={() => navigate('/booking')}
+            onClick={() => navigate('/agendar')}
           >
             <Calendar className="w-5 h-5 mr-2" />
             Começar agendamento
@@ -134,7 +134,7 @@ export default function Index() {
       {/* Footer */}
       <footer className="bg-gray-50 py-8">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-gray-600">© 2024 Lisboa Beauty Center. Feito com 💖 para você.</p>
+          <p className="text-gray-600">© 2025 Lisboa Beauty Center. Feito com 💖 para você.</p>
         </div>
       </footer>
     </div>

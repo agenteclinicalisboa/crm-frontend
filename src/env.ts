@@ -4,12 +4,12 @@ const env = {
     baseApi: '/api/v1',
   },
   contact: {
-    phone: '(11) 3000-0000',
-    email: 'contato@evertickets.com.br',
+    phone: '+55 (11) 9 6338 0379',
+    email: 'lisboabeautycenter@gmail.com',
     place: 'São Paulo, SP - Brasil',
   },
   social: {
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/lisboa_esteticaavancada',
   },
 };
 

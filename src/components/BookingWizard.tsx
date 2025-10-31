@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import StepIndicator from './StepIndicator';
 import PhoneStep from './steps/PhoneStep';
@@ -26,9 +26,9 @@ type StepData =
   | { professional: Professional };
 
 export default function BookingWizard() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [bookingData, setBookingData] = useState<Partial<BookingData>>({});
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [currentStep, setCurrentStep] = React.useState(1);
+  const [bookingData, setBookingData] = React.useState<Partial<BookingData>>({});
+  const [isCompleted, setIsCompleted] = React.useState(false);
 
   const stepTitles = [
     'Seu contato',
