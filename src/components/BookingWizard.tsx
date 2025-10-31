@@ -10,7 +10,8 @@ import PhotosStep from './steps/PhotosStep';
 import PaymentStep from './steps/PaymentStep';
 import CategoryStep from './steps/CategoryStep';
 
-import { type Service, type Professional, type Category } from '@/data/mockData';
+import { type Service, type Category } from '@/data/mockData';
+import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
 
 interface BookingData {
   phone: string;
@@ -18,7 +19,7 @@ interface BookingData {
   time: string;
   category: Category;
   service: Service;
-  professional: Professional;
+  professional: IProfessional;
 }
 
 type StepData =
@@ -26,7 +27,7 @@ type StepData =
   | { date: string; time: string }
   | { category: Category }
   | { service: Service }
-  | { professional: Professional };
+  | { professional: IProfessional };
 
 export default function BookingWizard() {
   const [currentStep, setCurrentStep] = React.useState(1);

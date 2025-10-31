@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
+
 interface BookingData {
   phone: string;
   date: string;
@@ -14,10 +16,7 @@ interface BookingData {
     price: number;
     duration: string;
   };
-  professional: {
-    name: string;
-    specialty: string;
-  };
+  professional: IProfessional;
 }
 
 interface SuccessPageProps {
@@ -90,8 +89,8 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
                 <User className="h-6 w-6 text-rose-600" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600">Profissional</p>
-                  <p className="font-semibold text-gray-800">{bookingData.professional.name}</p>
-                  <p className="text-sm text-rose-600">{bookingData.professional.specialty}</p>
+                  <p className="font-semibold text-gray-800">{bookingData.professional.nome}</p>
+                  <p className="text-sm text-rose-600">{bookingData.professional.profissao}</p>
                 </div>
               </div>
 

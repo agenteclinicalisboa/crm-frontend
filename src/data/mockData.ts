@@ -13,14 +13,6 @@ export interface Service {
   image: string;
 }
 
-export interface Professional {
-  id: string;
-  name: string;
-  specialty: string;
-  image: string;
-  rating: number;
-}
-
 export interface TimeSlot {
   time: string;
   available: boolean;
@@ -58,30 +50,6 @@ export const services: Service[] = [
     duration: '45 min',
     price: 200,
     image: '/api/placeholder/300/200'
-  }
-];
-
-export const professionals: Professional[] = [
-  {
-    id: '1',
-    name: 'Dra. Ana Silva',
-    specialty: 'Dermatologia Estética',
-    image: '/api/placeholder/150/150',
-    rating: 4.9
-  },
-  {
-    id: '2',
-    name: 'Carla Santos',
-    specialty: 'Esteticista Facial',
-    image: '/api/placeholder/150/150',
-    rating: 4.8
-  },
-  {
-    id: '3',
-    name: 'Marina Costa',
-    specialty: 'Massoterapia',
-    image: '/api/placeholder/150/150',
-    rating: 4.7
   }
 ];
 

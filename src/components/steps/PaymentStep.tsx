@@ -6,6 +6,8 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 
+import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
+
 interface BookingData {
   phone: string;
   date: string;
@@ -15,10 +17,7 @@ interface BookingData {
     price: number;
     duration: string;
   };
-  professional: {
-    name: string;
-    specialty: string;
-  };
+  professional: IProfessional;
 }
 
 interface PaymentStepProps {
@@ -95,8 +94,8 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
                 <User className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Profissional</p>
-                  <p className="font-semibold text-gray-800">{bookingData.professional.name}</p>
-                  <p className="text-sm text-pink-600">{bookingData.professional.specialty}</p>
+                  <p className="font-semibold text-gray-800">{bookingData.professional.nome}</p>
+                  <p className="text-sm text-pink-600">{bookingData.professional.profissao}</p>
                 </div>
               </div>
             </div>
