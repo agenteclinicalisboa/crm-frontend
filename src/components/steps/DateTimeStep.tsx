@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { Calendar, Clock } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -13,8 +13,8 @@ interface DateTimeStepProps {
 }
 
 export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeStepProps) {
-  const [selectedDate, setSelectedDate] = useState(initialData?.date || '');
-  const [selectedTime, setSelectedTime] = useState(initialData?.time || '');
+  const [selectedDate, setSelectedDate] = React.useState(initialData?.date ?? '');
+  const [selectedTime, setSelectedTime] = React.useState(initialData?.time ?? '');
 
   const handleNext = () => {
     if (selectedDate && selectedTime) {
@@ -35,47 +35,45 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
         display: date.toLocaleDateString('pt-BR', {
           weekday: 'short',
           day: '2-digit',
-          month: 'short'
-        })
+          month: 'short',
+        }),
       });
     }
     return dates;
   };
 
-  const dates = generateDates();
-
   return (
-    <div className="max-w-2xl mx-auto">
-      <Card className="p-8 border-0 shadow-lg rounded-2xl bg-white/80 backdrop-blur-sm">
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Calendar className="w-8 h-8 text-pink-500" />
+    <div className="mx-auto max-w-2xl">
+      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
+        <div className="mb-6 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+            <Calendar className="h-8 w-8 text-pink-500" />
           </div>
-          <p className="text-gray-600">
-            Escolha o melhor dia e horário para seu atendimento
-          </p>
+          <p className="text-gray-600">Escolha o melhor dia e horário para seu atendimento</p>
         </div>
 
         <div className="space-y-6">
           {/* Date Selection */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <Calendar className="w-5 h-5 mr-2 text-pink-500" />
+            <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800">
+              <Calendar className="mr-2 h-5 w-5 text-pink-500" />
               Selecione a data
             </h3>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {dates.map((date) => (
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              {businessHours.map(date => (
                 <button
                   key={date.value}
-                  onClick={() => setSelectedDate(date.value)}
-                  className={`p-3 rounded-xl text-center transition-all duration-300 ${
+                  className={`rounded-xl p-3 text-center transition-all duration-300 ${
                     selectedDate === date.value
                       ? 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg'
-                      : 'bg-gray-50 hover:bg-pink-50 text-gray-700 hover:text-pink-600'
+                      : 'bg-gray-50 text-gray-700 hover:bg-pink-50 hover:text-pink-600'
                   }`}
+                  onClick={() => {
+                    setSelectedDate(date.value);
+                  }}
                 >
-                  <div className="text-sm font-medium">{date.display}</div>
+                  <div className="text-sm font-medium">{date.label}</div>
                 </button>
               ))}
             </div>
@@ -84,23 +82,26 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
           {/* Time Selection */}
           {selectedDate && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-pink-500" />
+              <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800">
+                <Clock className="mr-2 h-5 w-5 text-pink-500" />
                 Escolha o horário
               </h3>
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
-                {timeSlots.map((slot) => (
+
+              <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
+                {timeSlots.map(slot => (
                   <button
                     key={slot.time}
-                    onClick={() => slot.available && setSelectedTime(slot.time)}
-                    disabled={!slot.available}
-                    className={`p-3 rounded-xl text-center transition-all duration-300 ${
+                    className={`rounded-xl p-3 text-center transition-all duration-300 ${
                       selectedTime === slot.time
                         ? 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg'
                         : slot.available
-                          ? 'bg-gray-50 hover:bg-pink-50 text-gray-700 hover:text-pink-600'
-                          : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          ? 'bg-gray-50 text-gray-700 hover:bg-pink-50 hover:text-pink-600'
+                          : 'cursor-not-allowed bg-gray-100 text-gray-400'
                     }`}
+                    disabled={!slot.available}
+                    onClick={() => {
+                      setSelectedTime(slot.time);
+                    }}
                   >
                     {slot.time}
                   </button>
@@ -110,18 +111,19 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
           )}
         </div>
 
-        <div className="flex gap-4 mt-8">
+        <div className="mt-8 flex gap-4">
           <Button
             onClick={onBack}
             variant="outline"
-            className="flex-1 !bg-transparent !hover:bg-transparent border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:border-gray-400 transition-all duration-300"
+            className="!hover:bg-transparent flex-1 rounded-xl border-gray-300 !bg-transparent py-3 font-semibold text-gray-600 transition-all duration-300 hover:border-gray-400"
           >
             Voltar
           </Button>
+
           <Button
             onClick={handleNext}
             disabled={!selectedDate || !selectedTime}
-            className="flex-1 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
           >
             Continuar
           </Button>

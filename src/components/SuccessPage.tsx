@@ -33,12 +33,12 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
   const generateBookingId = () => {
-    return 'LBC' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    return 'LBC' + Math.random().toString(36).substring(2, 9).toUpperCase();
   };
 
   const bookingId = generateBookingId();
@@ -46,40 +46,39 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 py-8">
       <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto max-w-2xl">
           {/* Success Header */}
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <CheckCircle className="w-10 h-10 text-white" />
+          <div className="mb-8 text-center">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-500 shadow-lg">
+              <CheckCircle className="h-10 w-10 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Agendamento confirmado! 🎉
-            </h1>
-            <p className="text-xl text-gray-600">
-              Seu momento de cuidado está agendado 💖
-            </p>
+            <h1 className="mb-4 text-3xl font-bold text-gray-800">Agendamento confirmado! 🎉</h1>
+            <p className="text-xl text-gray-600">Seu momento de cuidado está agendado 💖</p>
           </div>
 
           {/* Booking Details */}
-          <Card className="p-8 border-0 shadow-lg rounded-2xl bg-white/80 backdrop-blur-sm mb-6">
-            <div className="text-center mb-6">
-              <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100 px-4 py-2 text-sm font-semibold">
+          <Card className="mb-6 rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
+            <div className="mb-6 text-center">
+              <Badge
+                variant="secondary"
+                className="bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 hover:bg-green-100"
+              >
                 ID: {bookingId}
               </Badge>
             </div>
 
             <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="flex items-center gap-4 p-4 bg-pink-50 rounded-xl">
-                  <Calendar className="w-6 h-6 text-pink-600" />
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="flex items-center gap-4 rounded-xl bg-pink-50 p-4">
+                  <Calendar className="h-6 w-6 text-pink-600" />
                   <div>
                     <p className="text-sm text-gray-600">Data</p>
                     <p className="font-semibold text-gray-800">{formatDate(bookingData.date)}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 p-4 bg-pink-50 rounded-xl">
-                  <Clock className="w-6 h-6 text-pink-600" />
+                <div className="flex items-center gap-4 rounded-xl bg-pink-50 p-4">
+                  <Clock className="h-6 w-6 text-pink-600" />
                   <div>
                     <p className="text-sm text-gray-600">Horário</p>
                     <p className="font-semibold text-gray-800">{bookingData.time}</p>
@@ -87,8 +86,8 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-rose-50 rounded-xl">
-                <User className="w-6 h-6 text-rose-600" />
+              <div className="flex items-center gap-4 rounded-xl bg-rose-50 p-4">
+                <User className="h-6 w-6 text-rose-600" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600">Profissional</p>
                   <p className="font-semibold text-gray-800">{bookingData.professional.name}</p>
@@ -96,9 +95,9 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
                 </div>
               </div>
 
-              <div className="p-6 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl border border-pink-200">
-                <h4 className="font-semibold text-gray-800 mb-3">Tratamento agendado</h4>
-                <div className="flex justify-between items-center">
+              <div className="rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-6">
+                <h4 className="mb-3 font-semibold text-gray-800">Tratamento agendado</h4>
+                <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-gray-800">{bookingData.service.name}</p>
                     <p className="text-sm text-gray-600">Duração: {bookingData.service.duration}</p>
@@ -110,11 +109,11 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
           </Card>
 
           {/* Next Steps */}
-          <Card className="p-6 border-0 shadow-lg rounded-2xl bg-white/80 backdrop-blur-sm mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Próximos passos</h3>
+          <Card className="mb-6 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm">
+            <h3 className="mb-4 text-lg font-semibold text-gray-800">Próximos passos</h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <MessageCircle className="w-5 h-5 text-green-600 mt-1" />
+                <MessageCircle className="mt-1 h-5 w-5 text-green-600" />
                 <div>
                   <p className="font-medium text-gray-800">Confirmação por WhatsApp</p>
                   <p className="text-sm text-gray-600">
@@ -124,30 +123,26 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
               </div>
 
               <div className="flex items-start gap-3">
-                <Calendar className="w-5 h-5 text-blue-600 mt-1" />
+                <Calendar className="mt-1 h-5 w-5 text-blue-600" />
                 <div>
                   <p className="font-medium text-gray-800">Lembrete automático</p>
-                  <p className="text-sm text-gray-600">
-                    Você receberá um lembrete 24h antes do seu agendamento
-                  </p>
+                  <p className="text-sm text-gray-600">Você receberá um lembrete 24h antes do seu agendamento</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-purple-600 mt-1" />
+                <Phone className="mt-1 h-5 w-5 text-purple-600" />
                 <div>
                   <p className="font-medium text-gray-800">Dúvidas?</p>
-                  <p className="text-sm text-gray-600">
-                    Entre em contato conosco pelo WhatsApp: (21) 99999-9999
-                  </p>
+                  <p className="text-sm text-gray-600">Entre em contato conosco pelo WhatsApp: (21) 99999-9999</p>
                 </div>
               </div>
             </div>
           </Card>
 
           {/* Important Info */}
-          <Card className="p-6 border-0 shadow-lg rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 mb-6">
-            <h4 className="font-semibold text-amber-800 mb-3">Informações importantes</h4>
+          <Card className="mb-6 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-6 shadow-lg">
+            <h4 className="mb-3 font-semibold text-amber-800">Informações importantes</h4>
             <div className="space-y-2 text-sm text-amber-700">
               <p>• Chegue com 10 minutos de antecedência</p>
               <p>• Traga um documento com foto</p>
@@ -157,30 +152,35 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
           </Card>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <Button
-              onClick={() => navigate('/')}
+              className="!hover:bg-transparent flex-1 rounded-xl border-gray-300 !bg-transparent py-3 font-semibold text-gray-600 transition-all duration-300 hover:border-gray-400"
               variant="outline"
-              className="flex-1 !bg-transparent !hover:bg-transparent border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:border-gray-400 transition-all duration-300"
+              onClick={() => {
+                navigate('/');
+              }}
             >
-              <Home className="w-5 h-5 mr-2" />
+              <Home className="mr-2 h-5 w-5" />
               Voltar ao início
             </Button>
 
             <Button
-              onClick={() => window.open(`https://wa.me/5521999999999?text=Olá! Acabei de fazer um agendamento (ID: ${bookingId}) e gostaria de confirmar os detalhes.`, '_blank')}
-              className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={() =>
+                window.open(
+                  `https://wa.me/5521999999999?text=Olá! Acabei de fazer um agendamento (ID: ${bookingId}) e gostaria de confirmar os detalhes.`,
+                  '_blank'
+                )
+              }
+              className="flex-1 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-600 hover:shadow-xl"
             >
-              <MessageCircle className="w-5 h-5 mr-2" />
+              <MessageCircle className="mr-2 h-5 w-5" />
               Falar no WhatsApp
             </Button>
           </div>
 
           {/* Footer Message */}
-          <div className="text-center mt-8">
-            <p className="text-gray-600">
-              Nos vemos em breve! ✨
-            </p>
+          <div className="mt-8 text-center">
+            <p className="text-gray-600">Nos vemos em breve! ✨</p>
           </div>
         </div>
       </div>

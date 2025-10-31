@@ -22,7 +22,7 @@ interface BookingData {
 }
 
 interface PaymentStepProps {
-  bookingData: BookingData;
+  bookingData?: BookingData;
   onConfirm: () => void;
   onBack: () => void;
 }
@@ -44,31 +44,31 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
+  if (!bookingData) {
+    return <></>;
+  }
+
   return (
-    <div className="max-w-2xl mx-auto">
-      <Card className="p-8 border-0 shadow-lg rounded-2xl bg-white/80 backdrop-blur-sm">
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <CreditCard className="w-8 h-8 text-pink-500" />
+    <div className="mx-auto max-w-2xl">
+      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
+        <div className="mb-6 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+            <CreditCard className="h-8 w-8 text-pink-500" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">
-            Resumo do agendamento
-          </h3>
-          <p className="text-gray-600">
-            Confirme os detalhes antes de finalizar
-          </p>
+          <h3 className="mb-2 text-2xl font-bold text-gray-800">Resumo do agendamento</h3>
+          <p className="text-gray-600">Confirme os detalhes antes de finalizar</p>
         </div>
 
         {/* Booking Summary */}
-        <div className="space-y-6 mb-8">
-          <Card className="p-6 bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 rounded-2xl">
+        <div className="mb-8 space-y-6">
+          <Card className="rounded-2xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-6">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-pink-600" />
+                <Phone className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">WhatsApp</p>
                   <p className="font-semibold text-gray-800">{bookingData.phone}</p>
@@ -76,7 +76,7 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
               </div>
 
               <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-pink-600" />
+                <Calendar className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Data</p>
                   <p className="font-semibold text-gray-800">{formatDate(bookingData.date)}</p>
@@ -84,7 +84,7 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
               </div>
 
               <div className="flex items-center gap-3">
-                <Clock className="w-5 h-5 text-pink-600" />
+                <Clock className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Horário</p>
                   <p className="font-semibold text-gray-800">{bookingData.time}</p>
@@ -92,7 +92,7 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
               </div>
 
               <div className="flex items-center gap-3">
-                <User className="w-5 h-5 text-pink-600" />
+                <User className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Profissional</p>
                   <p className="font-semibold text-gray-800">{bookingData.professional.name}</p>
@@ -103,13 +103,16 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
           </Card>
 
           {/* Service Details */}
-          <Card className="p-6 border-0 shadow-md rounded-2xl bg-white">
-            <h4 className="font-semibold text-gray-800 mb-4">Detalhes do serviço</h4>
-            <div className="flex justify-between items-start mb-4">
+          <Card className="rounded-2xl border-0 bg-white p-6 shadow-md">
+            <h4 className="mb-4 font-semibold text-gray-800">Detalhes do serviço</h4>
+            <div className="mb-4 flex items-start justify-between">
               <div>
                 <p className="font-semibold text-gray-800">{bookingData.service.name}</p>
-                <Badge variant="secondary" className="bg-pink-100 text-pink-700 hover:bg-pink-100 mt-2">
-                  <Clock className="w-3 h-3 mr-1" />
+                <Badge
+                  variant="secondary"
+                  className="mt-2 bg-pink-100 text-pink-700 hover:bg-pink-100"
+                >
+                  <Clock className="mr-1 h-3 w-3" />
                   {bookingData.service.duration}
                 </Badge>
               </div>
@@ -118,7 +121,7 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
 
             <Separator className="my-4" />
 
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <p className="font-semibold text-gray-800">Total</p>
               <p className="text-2xl font-bold text-pink-600">€{bookingData.service.price}</p>
             </div>
@@ -126,25 +129,22 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
         </div>
 
         {/* Payment Method */}
-        <Card className="p-6 border-0 shadow-md rounded-2xl bg-white mb-6">
-          <h4 className="font-semibold text-gray-800 mb-4">Forma de pagamento</h4>
-          <div className="bg-green-50 p-4 rounded-xl border border-green-200">
+        <Card className="mb-6 rounded-2xl border-0 bg-white p-6 shadow-md">
+          <h4 className="mb-4 font-semibold text-gray-800">Forma de pagamento</h4>
+          <div className="rounded-xl border border-green-200 bg-green-50 p-4">
             <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-600" />
+              <CheckCircle className="h-5 w-5 text-green-600" />
               <div>
                 <p className="font-medium text-green-800">Pagamento no local</p>
-                <p className="text-sm text-green-600">
-                  Você pode pagar diretamente na clínica no dia do atendimento
-                </p>
+                <p className="text-sm text-green-600">Você pode pagar diretamente na clínica no dia do atendimento</p>
               </div>
             </div>
           </div>
         </Card>
 
-        <div className="bg-pink-50 p-4 rounded-xl mb-6">
+        <div className="mb-6 rounded-xl bg-pink-50 p-4">
           <p className="text-sm text-pink-700">
-            💖 <strong>Quase lá!</strong> Ao confirmar, enviaremos todos os detalhes
-            do seu agendamento via WhatsApp.
+            💖 <strong>Quase lá!</strong> Ao confirmar, enviaremos todos os detalhes do seu agendamento via WhatsApp.
           </p>
         </div>
 
@@ -153,23 +153,21 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
             onClick={onBack}
             variant="outline"
             disabled={isProcessing}
-            className="flex-1 !bg-transparent !hover:bg-transparent border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:border-gray-400 transition-all duration-300"
+            className="!hover:bg-transparent flex-1 rounded-xl border-gray-300 !bg-transparent py-3 font-semibold text-gray-600 transition-all duration-300 hover:border-gray-400"
           >
             Voltar
           </Button>
           <Button
-            onClick={handleConfirm}
+            className="flex-1 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl disabled:opacity-50"
             disabled={isProcessing}
-            className="flex-1 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+            onClick={() => {
+              void handleConfirm();
+            }}
           >
-            {isProcessing ? (
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                Confirmando...
-              </div>
-            ) : (
-              'Confirmar agendamento'
-            )}
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+              {isProcessing ? 'Confirmando...' : 'Confirmar agendamento'}
+            </div>
           </Button>
         </div>
       </Card>

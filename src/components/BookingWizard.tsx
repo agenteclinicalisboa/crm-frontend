@@ -27,7 +27,7 @@ type StepData =
 
 export default function BookingWizard() {
   const [currentStep, setCurrentStep] = React.useState(1);
-  const [bookingData, setBookingData] = React.useState<Partial<BookingData>>({});
+  const [bookingData, setBookingData] = React.useState<Partial<BookingData> | BookingData | undefined>(undefined);
   const [isCompleted, setIsCompleted] = React.useState(false);
 
   const stepTitles = [
@@ -36,11 +36,11 @@ export default function BookingWizard() {
     'Escolha do tratamento',
     'Profissional',
     'Nossos resultados',
-    'Confirmação'
+    'Confirmação',
   ];
 
   const handleNext = (stepData: StepData) => {
-    setBookingData(prev => ({ ...prev, ...stepData }));
+    setBookingData(prev => ({ ...prev, ...(stepData as BookingData) }));
     setCurrentStep(prev => prev + 1);
   };
 
@@ -69,7 +69,7 @@ export default function BookingWizard() {
           {currentStep === 1 && (
             <PhoneStep
               onNext={handleNext}
-              initialData={{ phone: bookingData.phone || '' }}
+              initialData={{ phone: bookingData?.phone ?? '' }}
             />
           )}
 
@@ -78,8 +78,8 @@ export default function BookingWizard() {
               onNext={handleNext}
               onBack={handleBack}
               initialData={{
-                date: bookingData.date || '',
-                time: bookingData.time || ''
+                date: bookingData?.date ?? '',
+                time: bookingData?.time ?? '',
               }}
             />
           )}
@@ -88,7 +88,7 @@ export default function BookingWizard() {
             <ServiceStep
               onNext={handleNext}
               onBack={handleBack}
-              initialData={{ service: bookingData.service! }}
+              initialData={{ service: bookingData?.service }}
             />
           )}
 
@@ -96,33 +96,22 @@ export default function BookingWizard() {
             <ProfessionalStep
               onNext={handleNext}
               onBack={handleBack}
-              initialData={{ professional: bookingData.professional! }}
+              initialData={{ professional: bookingData?.professional }}
             />
           )}
 
           {currentStep === 5 && (
             <PhotosStep
-              onNext={() => setCurrentStep(6)}
+              onNext={() => {
+                setCurrentStep(6);
+              }}
               onBack={handleBack}
             />
           )}
 
           {currentStep === 6 && (
             <PaymentStep
-              bookingData={{
-                phone: bookingData.phone!,
-                date: bookingData.date!,
-                time: bookingData.time!,
-                service: {
-                  name: bookingData.service!.name,
-                  price: bookingData.service!.price,
-                  duration: bookingData.service!.duration
-                },
-                professional: {
-                  name: bookingData.professional!.name,
-                  specialty: bookingData.professional!.specialty
-                }
-              }}
+              bookingData={bookingData as BookingData}
               onConfirm={handleConfirm}
               onBack={handleBack}
             />
