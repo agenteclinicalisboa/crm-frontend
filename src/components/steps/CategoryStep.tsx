@@ -2,22 +2,25 @@ import React from 'react';
 import { BedIcon } from 'lucide-react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { type Category } from '@/data/mockData';
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
-import type { IListProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
+import type {
+  IListProcedureCategory,
+  IProcedureCategory,
+} from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface CategoryStepProps {
-  initialData: { category?: Category };
-  onNext: (data: { category: Category }) => void;
+  initialData: { category?: IProcedureCategory };
+  onNext: (data: { category: IProcedureCategory }) => void;
   onBack: () => void;
 }
 
 export default function CategoryStep({ onNext, onBack, initialData }: CategoryStepProps) {
-  const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(initialData.category ?? null);
+  const [selectedCategory, setSelectedCategory] = React.useState<IProcedureCategory | null>(
+    initialData.category ?? null
+  );
 
   const queryProcedureCategories = useQuery<IListProcedureCategory[]>({
     placeholderData: keepPreviousData,
@@ -44,7 +47,7 @@ export default function CategoryStep({ onNext, onBack, initialData }: CategorySt
   };
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-7xl">
       <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
         <div className="mb-6 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">

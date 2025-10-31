@@ -3,3 +3,5 @@ export interface IListProcedureCategory {
   name: string;
   description: string;
 }
+
+export type IProcedureCategory = IListProcedureCategory

@@ -10,14 +10,15 @@ import PhotosStep from './steps/PhotosStep';
 import PaymentStep from './steps/PaymentStep';
 import CategoryStep from './steps/CategoryStep';
 
-import { type Service, type Category } from '@/data/mockData';
+import { type Service } from '@/data/mockData';
 import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
+import type { IProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface BookingData {
   phone: string;
   date: string;
   time: string;
-  category: Category;
+  category: IProcedureCategory;
   service: Service;
   professional: IProfessional;
 }
@@ -25,7 +26,7 @@ interface BookingData {
 type StepData =
   | { phone: string }
   | { date: string; time: string }
-  | { category: Category }
+  | { category: IProcedureCategory }
   | { service: Service }
   | { professional: IProfessional };
 
@@ -91,7 +92,7 @@ export default function BookingWizard() {
               onNext={handleNext}
               onBack={handleBack}
               initialData={{
-                category: bookingData?.category as unknown as Category,
+                category: bookingData?.category as unknown as IProcedureCategory,
                 service: bookingData?.service,
               }}
             />
