@@ -1,10 +1,15 @@
 import React from 'react';
 import { Calendar, Clock } from 'lucide-react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
+import { getNextAvailableDays } from '@/app/core/shared/utils';
 import { timeSlots } from '@/data/mockData';
+
+import type { IListBusinessHour } from '@/app/private/modules/admin/settings/types/settings';
+import { SettingsService } from '@/app/private/modules/admin/settings/services/settings';
 
 interface DateTimeStepProps {
   onNext: (data: { date: string; time: string }) => void;
@@ -16,30 +21,29 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
   const [selectedDate, setSelectedDate] = React.useState(initialData?.date ?? '');
   const [selectedTime, setSelectedTime] = React.useState(initialData?.time ?? '');
 
+  const queryBusinessHour = useQuery<IListBusinessHour[]>({
+    placeholderData: keepPreviousData,
+    queryKey: ['BusinessHour'],
+    queryFn: async () => {
+      const { data, error } = await new SettingsService().businessHoursList();
+      if (error) {
+        return [];
+      }
+
+      return data ?? [];
+    },
+  });
+
+  const businessHours = React.useMemo(() => {
+    const items = Array.isArray(queryBusinessHour.data) ? queryBusinessHour.data : [];
+
+    return getNextAvailableDays(items);
+  }, [queryBusinessHour.data]);
+
   const handleNext = () => {
     if (selectedDate && selectedTime) {
       onNext({ date: selectedDate, time: selectedTime });
     }
-  };
-
-  // Generate next 14 days
-  const generateDates = () => {
-    const dates = [];
-    const today = new Date();
-
-    for (let i = 1; i <= 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      dates.push({
-        value: date.toISOString().split('T')[0],
-        display: date.toLocaleDateString('pt-BR', {
-          weekday: 'short',
-          day: '2-digit',
-          month: 'short',
-        }),
-      });
-    }
-    return dates;
   };
 
   return (
