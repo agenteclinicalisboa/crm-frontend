@@ -32,9 +32,9 @@ export default function BookingWizard() {
 
   const stepTitles = [
     'Seu contato',
-    'Data e horário',
     'Escolha do tratamento',
     'Profissional',
+    'Data e horário',
     'Nossos resultados',
     'Confirmação',
   ];
@@ -74,17 +74,6 @@ export default function BookingWizard() {
           )}
 
           {currentStep === 2 && (
-            <DateTimeStep
-              onNext={handleNext}
-              onBack={handleBack}
-              initialData={{
-                date: bookingData?.date ?? '',
-                time: bookingData?.time ?? '',
-              }}
-            />
-          )}
-
-          {currentStep === 3 && (
             <ServiceStep
               onNext={handleNext}
               onBack={handleBack}
@@ -92,11 +81,22 @@ export default function BookingWizard() {
             />
           )}
 
-          {currentStep === 4 && (
+          {currentStep === 3 && (
             <ProfessionalStep
               onNext={handleNext}
               onBack={handleBack}
               initialData={{ professional: bookingData?.professional }}
+            />
+          )}
+
+          {currentStep === 4 && (
+            <DateTimeStep
+              onNext={handleNext}
+              onBack={handleBack}
+              initialData={{
+                date: bookingData?.date ?? '',
+                time: bookingData?.time ?? '',
+              }}
             />
           )}
 
