@@ -80,40 +80,45 @@ const ProfessionalStep = ({ onNext, onBack, initialData }: ProfessionalStepProps
     <Step
       title="Selecione o profissional de sua preferência"
       icon={<UserIcon className="h-6 w-6 text-pink-500" />}
-      help={
+      canNext={!!selected}
+      handleNext={handleNext}
+      onBack={onBack}
+    >
+      <>
+        <div className="max-h-[49vh] overflow-auto">
+          <div className="m-3 grid gap-6 md:grid-cols-2">
+            {queryProfessionals.isLoading || queryProfessionalsProcedure.isLoading ? (
+              <>
+                {Array(4)
+                  .fill('')
+                  .map((_, idx) => (
+                    <ProfessionalCardSkeleton key={`professional_procedure_${String(idx)}`} />
+                  ))}
+              </>
+            ) : (
+              <>
+                {professionals.map(item => (
+                  <ProfessionalCard
+                    key={item.id}
+                    item={item}
+                    selected={selected}
+                    onSelect={() => {
+                      setSelected(item);
+                    }}
+                  />
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+
         <div className="mb-6 rounded-xl bg-pink-50 p-4">
           <p className="text-sm text-pink-700">
             💡 <strong>Dica:</strong> Todos os nossos profissionais são qualificados e experientes. Você pode escolher
             com confiança!
           </p>
         </div>
-      }
-      canNext={!!selected}
-      handleNext={handleNext}
-      onBack={onBack}
-    >
-      {queryProfessionals.isLoading || queryProfessionalsProcedure.isLoading ? (
-        <>
-          {Array(4)
-            .fill('')
-            .map((_, idx) => (
-              <ProfessionalCardSkeleton key={`professional_procedure_${String(idx)}`} />
-            ))}
-        </>
-      ) : (
-        <>
-          {professionals.map(item => (
-            <ProfessionalCard
-              key={item.id}
-              item={item}
-              selected={selected}
-              onSelect={() => {
-                setSelected(item);
-              }}
-            />
-          ))}
-        </>
-      )}
+      </>
     </Step>
   );
 };

@@ -55,28 +55,32 @@ const ServiceStep = ({ onNext, onBack, initialData }: ServiceStepProps) => {
       handleNext={handleNext}
       onBack={onBack}
     >
-      {queryProcedureCategory.isLoading ? (
-        <>
-          {Array(4)
-            .fill('')
-            .map((_, idx) => (
-              <ProcedureCardSkeleton key={`category_procedure_${String(idx)}`} />
-            ))}
-        </>
-      ) : (
-        <>
-          {procedures.map(item => (
-            <ProcedureCard
-              key={item.id}
-              item={item}
-              selected={selected}
-              onSelect={() => {
-                setSelected(item);
-              }}
-            />
-          ))}
-        </>
-      )}
+      <div className="max-h-[43vh] overflow-auto">
+        <div className="m-3 grid gap-6 md:grid-cols-2">
+          {queryProcedureCategory.isLoading ? (
+            <>
+              {Array(4)
+                .fill('')
+                .map((_, idx) => (
+                  <ProcedureCardSkeleton key={`category_procedure_${String(idx)}`} />
+                ))}
+            </>
+          ) : (
+            <>
+              {procedures.map(item => (
+                <ProcedureCard
+                  key={item.id}
+                  item={item}
+                  selected={selected}
+                  onSelect={() => {
+                    setSelected(item);
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </div>
+      </div>
     </Step>
   );
 };

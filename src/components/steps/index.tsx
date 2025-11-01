@@ -8,12 +8,11 @@ interface Props {
   icon: React.ReactElement;
   children: React.ReactElement;
   canNext: boolean;
-  help?: React.ReactElement;
   handleNext: () => void;
   onBack: () => void;
 }
 
-const Step = ({ title, icon, canNext, help, children, handleNext, onBack }: Props) => {
+const Step = ({ title, icon, canNext, children, handleNext, onBack }: Props) => {
   return (
     <div className="mx-auto max-w-7xl">
       <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm">
@@ -25,11 +24,7 @@ const Step = ({ title, icon, canNext, help, children, handleNext, onBack }: Prop
           <p className="text-gray-600">{title}</p>
         </div>
 
-        <div className="max-h-[49vh] overflow-auto">
-          <div className="m-3 grid gap-6 md:grid-cols-2">{children}</div>
-        </div>
-
-        {help}
+        {children}
 
         <div className="flex gap-4">
           <Button

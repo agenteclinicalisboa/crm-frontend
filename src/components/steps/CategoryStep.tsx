@@ -51,28 +51,32 @@ const CategoryStep = ({ onNext, onBack, initialData }: CategoryStepProps) => {
       handleNext={handleNext}
       onBack={onBack}
     >
-      {queryProcedureCategories.isLoading ? (
-        <>
-          {Array(4)
-            .fill('')
-            .map((_, idx) => (
-              <CategoryProcedureCardSkeleton key={`category_${String(idx)}`} />
-            ))}
-        </>
-      ) : (
-        <>
-          {categories.map(item => (
-            <CategoryProcedureCard
-              key={item.id}
-              item={item}
-              selected={selected}
-              onSelect={() => {
-                setSelected(item);
-              }}
-            />
-          ))}
-        </>
-      )}
+      <div className="max-h-[49vh] overflow-auto">
+        <div className="m-3 grid gap-6 md:grid-cols-2">
+          {queryProcedureCategories.isLoading ? (
+            <>
+              {Array(4)
+                .fill('')
+                .map((_, idx) => (
+                  <CategoryProcedureCardSkeleton key={`category_${String(idx)}`} />
+                ))}
+            </>
+          ) : (
+            <>
+              {categories.map(item => (
+                <CategoryProcedureCard
+                  key={item.id}
+                  item={item}
+                  selected={selected}
+                  onSelect={() => {
+                    setSelected(item);
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </div>
+      </div>
     </Step>
   );
 };

@@ -67,29 +67,33 @@ const SubServiceStep = ({ onNext, onBack, initialData }: Props) => {
       handleNext={handleNext}
       onBack={onBack}
     >
-      {queryProcedureCategory.isLoading ? (
-        <>
-          {Array(4)
-            .fill('')
-            .map((_, idx) => (
-              <ProcedureCardSkeleton key={`category_sub_procedure_${String(idx)}`} />
-            ))}
-        </>
-      ) : (
-        <>
-          {procedures.map(item => (
-            <ProcedureCard
-              key={item.id}
-              item={item}
-              selected={selected}
-              showDetails
-              onSelect={() => {
-                setSelected(item);
-              }}
-            />
-          ))}
-        </>
-      )}
+      <div className="max-h-[49vh] overflow-auto">
+        <div className="m-3 grid gap-6 md:grid-cols-2">
+          {queryProcedureCategory.isLoading ? (
+            <>
+              {Array(4)
+                .fill('')
+                .map((_, idx) => (
+                  <ProcedureCardSkeleton key={`category_sub_procedure_${String(idx)}`} />
+                ))}
+            </>
+          ) : (
+            <>
+              {procedures.map(item => (
+                <ProcedureCard
+                  key={item.id}
+                  item={item}
+                  selected={selected}
+                  showDetails
+                  onSelect={() => {
+                    setSelected(item);
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </div>
+      </div>
     </Step>
   );
 };
