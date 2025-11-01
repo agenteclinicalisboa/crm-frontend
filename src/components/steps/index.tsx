@@ -17,14 +17,14 @@ const Step = ({ title, icon, canNext, children, handleNext, onBack }: Props) => 
     <div className="mx-auto max-w-7xl">
       <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm">
         <div className="space-y-3 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
             {icon}
           </div>
 
           <p className="text-gray-600">{title}</p>
         </div>
 
-        <div className="max-h-[47vh] overflow-auto">
+        <div className="max-h-[49vh] overflow-auto">
           <div className="m-3 grid gap-6 md:grid-cols-2">{children}</div>
         </div>
 

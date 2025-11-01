@@ -50,7 +50,7 @@ const ServiceStep = ({ onNext, onBack, initialData }: ServiceStepProps) => {
   return (
     <Step
       title="Escolha o tratamento ideal para você"
-      icon={<BedIcon className="h-8 w-8 text-pink-500" />}
+      icon={<BedIcon className="h-6 w-6 text-pink-500" />}
       canNext={!!selected}
       handleNext={handleNext}
       onBack={onBack}
