@@ -86,7 +86,7 @@ const ProfessionalStep = ({ onNext, onBack, initialData }: ProfessionalStepProps
     >
       <>
         <div className="max-h-[49vh] overflow-auto">
-          <div className="m-3 grid gap-6 md:grid-cols-2">
+          <div className="m-3 grid gap-6 md:grid-cols-3">
             {queryProfessionals.isLoading || queryProfessionalsProcedure.isLoading ? (
               <>
                 {Array(4)
