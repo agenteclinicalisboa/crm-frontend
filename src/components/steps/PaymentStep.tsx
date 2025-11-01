@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 
-import { currency } from '@/app/core/shared/utils';
+import { currency, formatDuration } from '@/app/core/shared/utils';
 
 import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
 import type { IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
@@ -111,7 +111,7 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
                   className="mt-2 bg-pink-100 text-pink-700 hover:bg-pink-100"
                 >
                   <Clock className="mr-1 h-3 w-3" />
-                  {bookingData.service.duration}
+                  {formatDuration(bookingData.service.duration)}
                 </Badge>
               </div>
 

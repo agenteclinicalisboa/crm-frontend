@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-import { currency } from '@/app/core/shared/utils';
+import { currency, formatDuration } from '@/app/core/shared/utils';
 
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
 import type {
@@ -91,7 +91,7 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
                         className="bg-pink-100 text-pink-700 hover:bg-pink-100"
                       >
                         <Clock className="mr-1 h-3 w-3" />
-                        {item.duration}
+                        {formatDuration(item.duration)}
                       </Badge>
                     </div>
 
