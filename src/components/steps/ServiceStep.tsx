@@ -1,12 +1,11 @@
 import React from 'react';
-import { BedIcon, Clock } from 'lucide-react';
+import { BedIcon } from 'lucide-react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
-import { currency, formatDuration } from '@/app/core/shared/utils';
+import { ProcedureCard, ProcedureCardSkeleton } from '@/components/ProcedureCard';
 
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
 import type {
@@ -23,7 +22,7 @@ interface ServiceStepProps {
 
 export default function ServiceStep({ onNext, onBack, initialData }: ServiceStepProps) {
   const [selectedCategory] = React.useState<IProcedureCategory>(initialData.category);
-  const [selectedService, setSelectedService] = React.useState<IProcedure | null>(initialData.service ?? null);
+  const [selectedService, setSelectedService] = React.useState<IProcedure | undefined>(initialData.service);
 
   const queryProcedureCategory = useQuery<IListProcedure[]>({
     placeholderData: keepPreviousData,
@@ -60,55 +59,28 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
         </div>
 
         <div className="mb-8 grid gap-6 md:grid-cols-2">
-          {procedures.map(item => (
-            <div
-              key={item.id}
-              className={`cursor-pointer transition-all duration-300 ${
-                selectedService?.id === item.id ? 'ring-2 ring-pink-400 ring-offset-2' : ''
-              }`}
-              onClick={() => {
-                setSelectedService(item);
-              }}
-            >
-              <Card className="h-full rounded-2xl border-0 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-xl">
-                {/* <div className="aspect-video mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-pink-100 to-rose-100">
-                  <img
-                    src={service.image}
-                    alt={service.name}
-                    className="h-full w-full object-cover"
-                  />
-                </div> */}
-
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-gray-800">{item.name}</h3>
-
-                  <p className="text-sm leading-relaxed text-gray-600">{item.description}</p>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <Badge
-                        variant="secondary"
-                        className="bg-pink-100 text-pink-700 hover:bg-pink-100"
-                      >
-                        <Clock className="mr-1 h-3 w-3" />
-                        {formatDuration(item.duration)}
-                      </Badge>
-                    </div>
-
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-pink-600">{currency(item.value)}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {selectedService?.id === item.id && (
-                  <div className="mt-4 rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-3">
-                    <p className="text-center text-sm font-medium text-pink-700">✨ Tratamento selecionado</p>
-                  </div>
-                )}
-              </Card>
-            </div>
-          ))}
+          {queryProcedureCategory.isLoading ? (
+            <>
+              {Array(4)
+                .fill('')
+                .map((_, idx) => (
+                  <ProcedureCardSkeleton key={`category_procedure_${String(idx)}`} />
+                ))}
+            </>
+          ) : (
+            <>
+              {procedures.map(item => (
+                <ProcedureCard
+                  key={item.id}
+                  item={item}
+                  selected={selectedService}
+                  onSelect={() => {
+                    setSelectedService(item);
+                  }}
+                />
+              ))}
+            </>
+          )}
         </div>
 
         <div className="flex gap-4">
