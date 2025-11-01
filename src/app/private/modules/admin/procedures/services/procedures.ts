@@ -2,7 +2,11 @@ import { getError } from '@/app/core/shared/utils';
 
 import { RestService } from '@/app/core/services/rest.service';
 
-import type { IListProcedure, IListProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
+import type {
+  IListProcedure,
+  IListProcedureCategory,
+  IProfessionalsProcedure,
+} from '@/app/private/modules/admin/procedures/types/procedures';
 
 export class ProceduresService {
   private restService: RestService;
@@ -24,8 +28,19 @@ export class ProceduresService {
 
   subList = async (subCategory: string) => {
     try {
-      const url = `/procedures/subcategory/${subCategory}`;
+      const url = `/procedures/category/1/subcategory/${subCategory}`;
       const { data } = await this.restService.get<IListProcedure[]>(url);
+
+      return { data };
+    } catch (error) {
+      return { error: getError(error) };
+    }
+  };
+
+  professionals = async (id: number) => {
+    try {
+      const url = `/procedures/professionals/${String(id)}`;
+      const { data } = await this.restService.get<IProfessionalsProcedure>(url);
 
       return { data };
     } catch (error) {
@@ -35,7 +50,7 @@ export class ProceduresService {
 
   list = async (category: string) => {
     try {
-      const url = `/procedures/${category}`;
+      const url = `/procedures/category/${category}`;
       const { data } = await this.restService.get<IListProcedure[]>(url);
 
       return { data };

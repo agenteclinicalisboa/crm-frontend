@@ -10,6 +10,9 @@ import type { IBookingCreate } from '@/app/private/modules/client/booking/types/
 import type { IListProfessional, IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
 import { ProfessionalsService } from '@/app/private/modules/admin/professionals/services/professionals';
 
+import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
+import type { IProfessionalsProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
+
 interface ProfessionalStepProps {
   initialData: {
     service: IBookingCreate['service'];
@@ -20,6 +23,7 @@ interface ProfessionalStepProps {
 }
 
 const ProfessionalStep = ({ onNext, onBack, initialData }: ProfessionalStepProps) => {
+  const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
   const [selectedProfessional, setSelectedProfessional] = useState<IProfessional | null>(
     initialData.professional ?? null
   );
@@ -37,10 +41,36 @@ const ProfessionalStep = ({ onNext, onBack, initialData }: ProfessionalStepProps
     },
   });
 
+  const queryProfessionalsProcedure = useQuery<IProfessionalsProcedure>({
+    placeholderData: keepPreviousData,
+    queryKey: ['ProfessionalsProcedure', selectedService.name],
+    queryFn: async () => {
+      const { data, error } = await new ProceduresService().professionals(selectedService.id);
+      if (error) {
+        return { id: selectedService.id, professionals: [] };
+      }
+
+      return data ?? { id: selectedService.id, professionals: [] };
+    },
+  });
+
   const professionals = React.useMemo(() => {
-    const items = Array.isArray(queryProfessionals.data) ? queryProfessionals.data : [];
-    return items;
-  }, [queryProfessionals.data]);
+    const professionals = Array.isArray(queryProfessionals.data) ? queryProfessionals.data : [];
+
+    const ids = Array.isArray(queryProfessionalsProcedure.data?.professionals)
+      ? queryProfessionalsProcedure.data.professionals
+      : [];
+    if (ids.length === 0) {
+      return professionals;
+    }
+
+    return ids
+      .map(item => {
+        const professional = professionals.find(it => it.id == item);
+        return professional;
+      })
+      .filter(item => !!item?.id) as IListProfessional[];
+  }, [queryProfessionals.data, queryProfessionalsProcedure.data?.professionals]);
 
   const handleNext = () => {
     if (selectedProfessional) {

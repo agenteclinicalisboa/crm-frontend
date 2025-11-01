@@ -5,12 +5,17 @@ export interface IListProcedureCategory {
 }
 
 export interface IListProcedure {
-  id: string;
+  id: number;
   category: string;
   name: string;
   description: string;
   duration: number;
   value: number;
+}
+
+export interface IProfessionalsProcedure {
+  id: number;
+  professionals: number[];
 }
 
 export type IProcedure = IListProcedure;
