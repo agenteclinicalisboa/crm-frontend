@@ -2,30 +2,32 @@ import React from 'react';
 import { BedIcon, Clock } from 'lucide-react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { services, type Category, type Service } from '@/data/mockData';
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
-import type { IListProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
+import type {
+  IListProcedure,
+  IProcedure,
+  IProcedureCategory,
+} from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface ServiceStepProps {
-  initialData: { category: Category; service?: Service };
-  onNext: (data: { service: Service }) => void;
+  initialData: { category: IProcedureCategory; service?: IProcedure };
+  onNext: (data: { service: IProcedure }) => void;
   onBack: () => void;
 }
 
 export default function ServiceStep({ onNext, onBack, initialData }: ServiceStepProps) {
-  const [selectedCategory] = React.useState<Category>(initialData.category);
-  const [selectedService, setSelectedService] = React.useState<Service | null>(initialData.service ?? null);
+  const [selectedCategory] = React.useState<IProcedureCategory>(initialData.category);
+  const [selectedService, setSelectedService] = React.useState<IProcedure | null>(initialData.service ?? null);
 
-  const queryProcedureCategories = useQuery<IListProcedureCategory[]>({
+  const queryProcedureCategory = useQuery<IListProcedure[]>({
     placeholderData: keepPreviousData,
-    queryKey: ['ProcedureCategories'],
+    queryKey: ['ProcedureCategory', selectedCategory.id],
     queryFn: async () => {
-      const { data, error } = await new ProceduresService().categoriesList();
+      const { data, error } = await new ProceduresService().list(selectedCategory.id);
       if (error) {
         return [];
       }
@@ -34,10 +36,10 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
     },
   });
 
-  const categories = React.useMemo(() => {
-    const items = Array.isArray(queryProcedureCategories.data) ? queryProcedureCategories.data : [];
+  const procedures = React.useMemo(() => {
+    const items = Array.isArray(queryProcedureCategory.data) ? queryProcedureCategory.data : [];
     return items;
-  }, [queryProcedureCategories.data]);
+  }, [queryProcedureCategory.data]);
 
   const handleNext = () => {
     if (selectedService) {
@@ -56,14 +58,14 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
         </div>
 
         <div className="mb-8 grid gap-6 md:grid-cols-2">
-          {services.map(service => (
+          {procedures.map(item => (
             <div
-              key={service.id}
+              key={item.id}
               className={`cursor-pointer transition-all duration-300 ${
-                selectedService?.id === service.id ? 'ring-2 ring-pink-400 ring-offset-2' : ''
+                selectedService?.id === item.id ? 'ring-2 ring-pink-400 ring-offset-2' : ''
               }`}
               onClick={() => {
-                setSelectedService(service);
+                setSelectedService(item);
               }}
             >
               <Card className="h-full rounded-2xl border-0 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-xl">
@@ -76,9 +78,9 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
                 </div> */}
 
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-gray-800">{service.name}</h3>
+                  <h3 className="text-xl font-semibold text-gray-800">{item.name}</h3>
 
-                  <p className="text-sm leading-relaxed text-gray-600">{service.description}</p>
+                  <p className="text-sm leading-relaxed text-gray-600">{item.description}</p>
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -87,17 +89,17 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
                         className="bg-pink-100 text-pink-700 hover:bg-pink-100"
                       >
                         <Clock className="mr-1 h-3 w-3" />
-                        {service.duration}
+                        {item.duration}
                       </Badge>
                     </div>
 
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-pink-600">R${service.price}</p>
+                      <p className="text-2xl font-bold text-pink-600">R${item.value}</p>
                     </div>
                   </div>
                 </div>
 
-                {selectedService?.id === service.id && (
+                {selectedService?.id === item.id && (
                   <div className="mt-4 rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-3">
                     <p className="text-center text-sm font-medium text-pink-700">✨ Tratamento selecionado</p>
                   </div>

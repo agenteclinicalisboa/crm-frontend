@@ -7,16 +7,13 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 
 import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
+import type { IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface BookingData {
   phone: string;
   date: string;
   time: string;
-  service: {
-    name: string;
-    price: number;
-    duration: string;
-  };
+  service: IProcedure;
   professional: IProfessional;
 }
 
@@ -115,14 +112,14 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
                   {bookingData.service.duration}
                 </Badge>
               </div>
-              <p className="text-2xl font-bold text-pink-600">€{bookingData.service.price}</p>
+              <p className="text-2xl font-bold text-pink-600">R${bookingData.service.value}</p>
             </div>
 
             <Separator className="my-4" />
 
             <div className="flex items-center justify-between">
               <p className="font-semibold text-gray-800">Total</p>
-              <p className="text-2xl font-bold text-pink-600">€{bookingData.service.price}</p>
+              <p className="text-2xl font-bold text-pink-600">R${bookingData.service.value}</p>
             </div>
           </Card>
         </div>
