@@ -82,6 +82,7 @@ const SubServiceStep = ({ onNext, onBack, initialData }: Props) => {
               key={item.id}
               item={item}
               selected={selected}
+              showDetails
               onSelect={() => {
                 setSelected(item);
               }}

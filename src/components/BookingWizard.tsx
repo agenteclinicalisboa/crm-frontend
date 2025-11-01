@@ -55,7 +55,7 @@ export default function BookingWizard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 p-10">
+    <div className="h-full min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 p-10">
       <div className="container mx-auto space-y-4">
         <StepIndicator
           currentStep={currentStep}

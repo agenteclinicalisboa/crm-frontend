@@ -12,10 +12,11 @@ import type { IProcedure } from '@/app/private/modules/admin/procedures/types/pr
 interface Props {
   item: IProcedure;
   selected?: IProcedure;
+  showDetails?: boolean;
   onSelect: () => void;
 }
 
-const ProcedureCard = ({ item, selected, onSelect }: Props) => {
+const ProcedureCard = ({ item, selected, showDetails, onSelect }: Props) => {
   return (
     <div
       key={item.id}
@@ -32,21 +33,23 @@ const ProcedureCard = ({ item, selected, onSelect }: Props) => {
 
           <p className="text-sm leading-relaxed text-gray-600">{item.description}</p>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Badge
-                className="bg-pink-100 text-pink-700 hover:bg-pink-100"
-                variant="secondary"
-              >
-                <ClockIcon className="mr-1 h-3 w-3" />
-                {formatDuration(item.duration)}
-              </Badge>
-            </div>
+          {showDetails && (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Badge
+                  className="bg-pink-100 text-pink-700 hover:bg-pink-100"
+                  variant="secondary"
+                >
+                  <ClockIcon className="mr-1 h-3 w-3" />
+                  {formatDuration(item.duration)}
+                </Badge>
+              </div>
 
-            <div className="text-right">
-              <p className="text-2xl font-bold text-pink-600">{currency(item.value)}</p>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-pink-600">{currency(item.value)}</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {selected?.id === item.id && (

@@ -24,7 +24,7 @@ const Step = ({ title, icon, canNext, children, handleNext, onBack }: Props) => 
           <p className="text-gray-600">{title}</p>
         </div>
 
-        <div className="max-h-[50vh] overflow-auto">
+        <div className="max-h-[47vh] overflow-auto">
           <div className="m-3 grid gap-6 md:grid-cols-2">{children}</div>
         </div>
 
