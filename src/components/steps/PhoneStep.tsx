@@ -43,20 +43,21 @@ export default function PhoneStep({ onNext, initialData }: PhoneStepProps) {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <Card className="p-8 border-0 shadow-lg rounded-2xl bg-white/80 backdrop-blur-sm">
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Phone className="w-8 h-8 text-pink-500" />
+    <div className="mx-auto max-w-md">
+      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
+        <div className="mb-6 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+            <Phone className="h-8 w-8 text-pink-500" />
           </div>
-          <p className="text-gray-600">
-            Vamos começar com seu número de WhatsApp para confirmar o agendamento
-          </p>
+          <p className="text-gray-600">Vamos começar com seu número de WhatsApp para confirmar o agendamento</p>
         </div>
 
         <div className="space-y-4">
           <div>
-            <Label htmlFor="phone" className="text-gray-700 font-medium">
+            <Label
+              htmlFor="phone"
+              className="font-medium text-gray-700"
+            >
               Número do WhatsApp *
             </Label>
             <Input
@@ -65,27 +66,24 @@ export default function PhoneStep({ onNext, initialData }: PhoneStepProps) {
               placeholder="(11) 99999-9999"
               value={phone}
               onChange={handlePhoneChange}
-              className={`mt-2 rounded-xl border-2 py-3 px-4 text-lg ${
+              className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
                 error ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
               }`}
               maxLength={15}
             />
-            {error && (
-              <p className="text-red-500 text-sm mt-2">{error}</p>
-            )}
+            {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
           </div>
 
-          <div className="bg-pink-50 p-4 rounded-xl">
+          <div className="rounded-xl bg-pink-50 p-4">
             <p className="text-sm text-pink-700">
-              💡 <strong>Dica:</strong> Usaremos este número para enviar a confirmação
-              do seu agendamento via WhatsApp.
+              💡 <strong>Dica:</strong> Usaremos este número para enviar a confirmação do seu agendamento via WhatsApp.
             </p>
           </div>
         </div>
 
         <Button
+          className="mt-6 w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl"
           onClick={handleNext}
-          className="w-full mt-6 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
         >
           Continuar
         </Button>

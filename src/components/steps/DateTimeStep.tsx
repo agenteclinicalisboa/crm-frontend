@@ -12,9 +12,9 @@ import type { IListBusinessHour } from '@/app/private/modules/admin/settings/typ
 import { SettingsService } from '@/app/private/modules/admin/settings/services/settings';
 
 interface DateTimeStepProps {
+  initialData?: { date: string; time: string };
   onNext: (data: { date: string; time: string }) => void;
   onBack: () => void;
-  initialData?: { date: string; time: string };
 }
 
 export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeStepProps) {
@@ -117,17 +117,17 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
 
         <div className="mt-8 flex gap-4">
           <Button
-            onClick={onBack}
-            variant="outline"
             className="!hover:bg-transparent flex-1 rounded-xl border-gray-300 !bg-transparent py-3 font-semibold text-gray-600 transition-all duration-300 hover:border-gray-400"
+            variant="outline"
+            onClick={onBack}
           >
             Voltar
           </Button>
 
           <Button
-            onClick={handleNext}
-            disabled={!selectedDate || !selectedTime}
             className="flex-1 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!selectedDate || !selectedTime}
+            onClick={handleNext}
           >
             Continuar
           </Button>

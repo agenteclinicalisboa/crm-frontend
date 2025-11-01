@@ -41,7 +41,10 @@ export default function SubServiceStep({ onNext, onBack, initialData }: Props) {
     const items = Array.isArray(queryProcedureCategory.data) ? queryProcedureCategory.data : [];
     if (items.length === 0) {
       items.push(selectedService);
-      setSelectedSubService(selectedService);
+    }
+
+    if (items.length === 1) {
+      setSelectedSubService(items[0]);
     }
 
     return items;
