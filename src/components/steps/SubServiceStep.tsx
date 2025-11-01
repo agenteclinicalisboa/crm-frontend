@@ -5,18 +5,23 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Step } from '@/components/steps';
 import { ProcedureCard, ProcedureCardSkeleton } from '@/components/ProcedureCard';
 
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
-import type { IListProcedure, IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IListProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface Props {
-  initialData: { service: IProcedure; subService?: IProcedure };
-  onNext: (data: { subService: IProcedure | undefined }) => void;
+  initialData: {
+    service: IBookingCreate['service'];
+    subService?: IBookingCreate['subService'];
+  };
+  onNext: (data: { subService?: IBookingCreate['subService'] }) => void;
   onBack: () => void;
 }
 
 const SubServiceStep = ({ onNext, onBack, initialData }: Props) => {
-  const [selectedService] = React.useState<IProcedure>(initialData.service);
-  const [selected, setSelected] = React.useState<IProcedure | undefined>(initialData.subService);
+  const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
+  const [selected, setSelected] = React.useState<IBookingCreate['subService'] | undefined>(initialData.subService);
 
   const queryProcedureCategory = useQuery<IListProcedure[]>({
     placeholderData: keepPreviousData,

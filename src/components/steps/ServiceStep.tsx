@@ -5,22 +5,23 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Step } from '@/components/steps';
 import { ProcedureCard, ProcedureCardSkeleton } from '@/components/ProcedureCard';
 
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
-import type {
-  IListProcedure,
-  IProcedure,
-  IProcedureCategory,
-} from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IListProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface ServiceStepProps {
-  initialData: { category: IProcedureCategory; service?: IProcedure };
-  onNext: (data: { service: IProcedure }) => void;
+  initialData: {
+    category: IBookingCreate['category'];
+    service?: IBookingCreate['service'];
+  };
+  onNext: (data: { service: IBookingCreate['service'] }) => void;
   onBack: () => void;
 }
 
-export default function ServiceStep({ onNext, onBack, initialData }: ServiceStepProps) {
-  const [selectedCategory] = React.useState<IProcedureCategory>(initialData.category);
-  const [selected, setSelected] = React.useState<IProcedure | undefined>(initialData.service);
+const ServiceStep = ({ onNext, onBack, initialData }: ServiceStepProps) => {
+  const [selectedCategory] = React.useState<IBookingCreate['category']>(initialData.category);
+  const [selected, setSelected] = React.useState<IBookingCreate['service'] | undefined>(initialData.service);
 
   const queryProcedureCategory = useQuery<IListProcedure[]>({
     placeholderData: keepPreviousData,
@@ -78,4 +79,6 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
       )}
     </Step>
   );
-}
+};
+
+export { ServiceStep };

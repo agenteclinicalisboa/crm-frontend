@@ -7,22 +7,13 @@ import { Badge } from '@/components/ui/badge';
 
 import { currency, formatDuration } from '@/app/core/shared/utils';
 
-import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
-import type { IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
-interface BookingData {
-  phone: string;
-  date: string;
-  time: string;
-  service: IProcedure;
-  professional: IProfessional;
+interface Props {
+  bookingData: IBookingCreate;
 }
 
-interface SuccessPageProps {
-  bookingData: BookingData;
-}
-
-export default function SuccessPage({ bookingData }: SuccessPageProps) {
+const SuccessPage = ({ bookingData }: Props) => {
   const navigate = useNavigate();
 
   const formatDate = (dateString: string) => {
@@ -184,4 +175,6 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
       </div>
     </div>
   );
-}
+};
+
+export { SuccessPage };

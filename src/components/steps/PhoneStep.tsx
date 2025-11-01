@@ -11,8 +11,8 @@ interface PhoneStepProps {
   initialData?: { phone: string };
 }
 
-export default function PhoneStep({ onNext, initialData }: PhoneStepProps) {
-  const [phone, setPhone] = useState(initialData?.phone || '');
+const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
+  const [phone, setPhone] = useState(initialData?.phone ?? '');
   const [error, setError] = useState('');
 
   const formatPhone = (value: string) => {
@@ -90,4 +90,6 @@ export default function PhoneStep({ onNext, initialData }: PhoneStepProps) {
       </Card>
     </div>
   );
-}
+};
+
+export { PhoneStep };

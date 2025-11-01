@@ -8,24 +8,15 @@ import { Badge } from '@/components/ui/badge';
 
 import { currency, formatDuration } from '@/app/core/shared/utils';
 
-import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
-import type { IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
-
-interface BookingData {
-  phone: string;
-  date: string;
-  time: string;
-  service: IProcedure;
-  professional: IProfessional;
-}
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
 interface PaymentStepProps {
-  bookingData?: BookingData;
+  bookingData: IBookingCreate;
   onConfirm: () => void;
   onBack: () => void;
 }
 
-export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentStepProps) {
+const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleConfirm = async () => {
@@ -45,10 +36,6 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
       day: 'numeric',
     });
   };
-
-  if (!bookingData) {
-    return <></>;
-  }
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -173,4 +160,6 @@ export default function PaymentStep({ bookingData, onConfirm, onBack }: PaymentS
       </Card>
     </div>
   );
-}
+};
+
+export { PaymentStep };

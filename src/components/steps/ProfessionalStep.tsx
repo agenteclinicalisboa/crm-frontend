@@ -5,16 +5,21 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
 import type { IListProfessional, IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
 import { ProfessionalsService } from '@/app/private/modules/admin/professionals/services/professionals';
 
 interface ProfessionalStepProps {
-  onNext: (data: { professional: IProfessional }) => void;
+  initialData: {
+    service: IBookingCreate['service'];
+    professional?: IBookingCreate['professional'];
+  };
+  onNext: (data: { professional: IBookingCreate['professional'] }) => void;
   onBack: () => void;
-  initialData: { professional?: IProfessional };
 }
 
-export default function ProfessionalStep({ onNext, onBack, initialData }: ProfessionalStepProps) {
+const ProfessionalStep = ({ onNext, onBack, initialData }: ProfessionalStepProps) => {
   const [selectedProfessional, setSelectedProfessional] = useState<IProfessional | null>(
     initialData.professional ?? null
   );
@@ -121,4 +126,6 @@ export default function ProfessionalStep({ onNext, onBack, initialData }: Profes
       </Card>
     </div>
   );
-}
+};
+
+export { ProfessionalStep };

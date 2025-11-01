@@ -17,7 +17,7 @@ interface DateTimeStepProps {
   onBack: () => void;
 }
 
-export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeStepProps) {
+const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
   const [selectedDate, setSelectedDate] = React.useState(initialData?.date ?? '');
   const [selectedTime, setSelectedTime] = React.useState(initialData?.time ?? '');
 
@@ -135,4 +135,6 @@ export default function DateTimeStep({ onNext, onBack, initialData }: DateTimeSt
       </Card>
     </div>
   );
-}
+};
+
+export { DateTimeStep };

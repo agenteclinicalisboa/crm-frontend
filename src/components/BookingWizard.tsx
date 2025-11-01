@@ -1,55 +1,44 @@
 import React from 'react';
 
-import SuccessPage from './SuccessPage';
-import StepIndicator from './StepIndicator';
-import PhoneStep from './steps/PhoneStep';
-import DateTimeStep from './steps/DateTimeStep';
-import ServiceStep from './steps/ServiceStep';
+import {SuccessPage} from './SuccessPage';
+import {StepIndicator} from './StepIndicator';
+import { PhoneStep } from './steps/PhoneStep';
+import { DateTimeStep } from './steps/DateTimeStep';
+import { ServiceStep } from './steps/ServiceStep';
 import { SubServiceStep } from './steps/SubServiceStep';
-import ProfessionalStep from './steps/ProfessionalStep';
-import PhotosStep from './steps/PhotosStep';
-import PaymentStep from './steps/PaymentStep';
-import CategoryStep from './steps/CategoryStep';
+import { ProfessionalStep } from './steps/ProfessionalStep';
+import { PhotosStep } from './steps/PhotosStep';
+import { PaymentStep } from './steps/PaymentStep';
+import { CategoryStep } from './steps/CategoryStep';
 
-import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
-import type { IProcedure, IProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
-interface BookingData {
-  phone: string;
-  date: string;
-  time: string;
-  category: IProcedureCategory;
-  service: IProcedure;
-  subService: IProcedure;
-  professional: IProfessional;
-}
+const stepTitles = [
+  'Seu contato',
+  'Escolha do tipo do tratamento',
+  'Escolha do tratamento',
+  'Escolha da área do tratamento',
+  'Profissional',
+  'Data e horário',
+  'Nossos resultados',
+  'Confirmação',
+];
 
 type StepData =
   | { phone: string }
   | { date: string; time: string }
-  | { category: IProcedureCategory }
-  | { service: IProcedure }
-  | { subService?: IProcedure }
-  | { professional: IProfessional };
+  | { category: IBookingCreate['category'] }
+  | { service: IBookingCreate['service'] }
+  | { subService?: IBookingCreate['subService'] }
+  | { professional: IBookingCreate['professional'] };
 
 export default function BookingWizard() {
   const [currentStep, setCurrentStep] = React.useState(1);
-  const [bookingData, setBookingData] = React.useState<Partial<BookingData> | BookingData | undefined>(undefined);
+  const [bookingData, setBookingData] = React.useState<Partial<IBookingCreate> | IBookingCreate | undefined>(undefined);
   const [isCompleted, setIsCompleted] = React.useState(false);
 
-  const stepTitles = [
-    'Seu contato',
-    'Escolha do tipo do tratamento',
-    'Escolha do tratamento',
-    'Escolha da área do tratamento',
-    'Profissional',
-    'Data e horário',
-    'Nossos resultados',
-    'Confirmação',
-  ];
-
   const handleNext = (stepData: StepData) => {
-    setBookingData(prev => ({ ...prev, ...(stepData as BookingData) }));
+    setBookingData(prev => ({ ...prev, ...(stepData as IBookingCreate) }));
     setCurrentStep(prev => prev + 1);
   };
 
@@ -62,7 +51,7 @@ export default function BookingWizard() {
   };
 
   if (isCompleted) {
-    return <SuccessPage bookingData={bookingData as BookingData} />;
+    return <SuccessPage bookingData={bookingData as IBookingCreate} />;
   }
 
   return (
@@ -96,7 +85,7 @@ export default function BookingWizard() {
               onNext={handleNext}
               onBack={handleBack}
               initialData={{
-                category: bookingData?.category as unknown as IProcedureCategory,
+                category: bookingData?.category as unknown as IBookingCreate['category'],
                 service: bookingData?.service,
               }}
             />
@@ -105,7 +94,7 @@ export default function BookingWizard() {
           {currentStep === 4 && (
             <SubServiceStep
               initialData={{
-                service: bookingData?.service as unknown as IProcedure,
+                service: bookingData?.service as unknown as IBookingCreate['service'],
                 subService: bookingData?.subService,
               }}
               onNext={handleNext}
@@ -117,7 +106,10 @@ export default function BookingWizard() {
             <ProfessionalStep
               onNext={handleNext}
               onBack={handleBack}
-              initialData={{ professional: bookingData?.professional }}
+              initialData={{
+                service: (bookingData?.subService ?? bookingData?.service) as unknown as IBookingCreate['service'],
+                professional: bookingData?.professional,
+              }}
             />
           )}
 
@@ -143,7 +135,7 @@ export default function BookingWizard() {
 
           {currentStep === 8 && (
             <PaymentStep
-              bookingData={bookingData as BookingData}
+              bookingData={bookingData as IBookingCreate}
               onConfirm={handleConfirm}
               onBack={handleBack}
             />

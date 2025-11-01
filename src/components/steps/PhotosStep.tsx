@@ -11,7 +11,7 @@ interface PhotosStepProps {
   onBack: () => void;
 }
 
-export default function PhotosStep({ onNext, onBack }: PhotosStepProps) {
+const PhotosStep = ({ onNext, onBack }: PhotosStepProps) => {
   return (
     <div className="mx-auto max-w-4xl">
       <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
@@ -95,4 +95,6 @@ export default function PhotosStep({ onNext, onBack }: PhotosStepProps) {
       </Card>
     </div>
   );
-}
+};
+
+export { PhotosStep };

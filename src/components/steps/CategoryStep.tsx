@@ -5,20 +5,19 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Step } from '@/components/steps';
 import { CategoryProcedureCard, CategoryProcedureCardSkeleton } from '@/components/CategoryProcedureCard';
 
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
-import type {
-  IListProcedureCategory,
-  IProcedureCategory,
-} from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IListProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface CategoryStepProps {
-  initialData: { category?: IProcedureCategory };
-  onNext: (data: { category: IProcedureCategory }) => void;
+  initialData: { category?: IBookingCreate['category'] };
+  onNext: (data: { category: IBookingCreate['category'] }) => void;
   onBack: () => void;
 }
 
-export default function CategoryStep({ onNext, onBack, initialData }: CategoryStepProps) {
-  const [selected, setSelected] = React.useState<IProcedureCategory | undefined>(initialData.category);
+const CategoryStep = ({ onNext, onBack, initialData }: CategoryStepProps) => {
+  const [selected, setSelected] = React.useState<IBookingCreate['category'] | undefined>(initialData.category);
 
   const queryProcedureCategories = useQuery<IListProcedureCategory[]>({
     placeholderData: keepPreviousData,
@@ -76,4 +75,6 @@ export default function CategoryStep({ onNext, onBack, initialData }: CategorySt
       )}
     </Step>
   );
-}
+};
+
+export { CategoryStep };
