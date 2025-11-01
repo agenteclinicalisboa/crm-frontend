@@ -29,7 +29,7 @@ type StepData =
   | { date: string; time: string }
   | { category: IProcedureCategory }
   | { service: IProcedure }
-  | { subService: IProcedure }
+  | { subService?: IProcedure }
   | { professional: IProfessional };
 
 export default function BookingWizard() {

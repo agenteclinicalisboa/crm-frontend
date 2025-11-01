@@ -12,7 +12,7 @@ import type { IListProcedure, IProcedure } from '@/app/private/modules/admin/pro
 
 interface Props {
   initialData: { service: IProcedure; subService?: IProcedure };
-  onNext: (data: { subService: IProcedure }) => void;
+  onNext: (data: { subService: IProcedure | undefined }) => void;
   onBack: () => void;
 }
 
@@ -34,7 +34,16 @@ export default function SubServiceStep({ onNext, onBack, initialData }: Props) {
   });
 
   const procedures = React.useMemo(() => {
+    if (queryProcedureCategory.isLoading) {
+      return [];
+    }
+
     const items = Array.isArray(queryProcedureCategory.data) ? queryProcedureCategory.data : [];
+    if (items.length === 0) {
+      items.push(selectedService);
+      setSelectedSubService(selectedService);
+    }
+
     return items;
   }, [queryProcedureCategory.data]);
 
