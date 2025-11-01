@@ -20,9 +20,7 @@ interface CategoryStepProps {
 }
 
 export default function CategoryStep({ onNext, onBack, initialData }: CategoryStepProps) {
-  const [selectedCategory, setSelectedCategory] = React.useState<IProcedureCategory | null>(
-    initialData.category ?? null
-  );
+  const [selectedCategory, setSelectedCategory] = React.useState<IProcedureCategory | undefined>(initialData.category);
 
   const queryProcedureCategories = useQuery<IListProcedureCategory[]>({
     placeholderData: keepPreviousData,
@@ -73,6 +71,7 @@ export default function CategoryStep({ onNext, onBack, initialData }: CategorySt
                 <CategoryProcedureCard
                   key={item.id}
                   category={item}
+                  selected={selectedCategory}
                   onSelect={() => {
                     setSelectedCategory(item);
                   }}
