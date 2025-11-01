@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Phone } from 'lucide-react';
+import { PhoneIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
+
+import { formatPhone } from '@/app/core/shared/utils';
 
 interface PhoneStepProps {
   onNext: (data: { phone: string }) => void;
@@ -14,14 +16,6 @@ interface PhoneStepProps {
 const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
   const [phone, setPhone] = useState(initialData?.phone ?? '');
   const [error, setError] = useState('');
-
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 11) {
-      return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-    }
-    return value;
-  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhone(e.target.value);
@@ -39,6 +33,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
       setError('Por favor, insira um número de celular válido');
       return;
     }
+
     onNext({ phone });
   };
 
@@ -47,7 +42,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
       <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
         <div className="mb-6 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
-            <Phone className="h-8 w-8 text-pink-500" />
+            <PhoneIcon className="h-8 w-8 text-pink-500" />
           </div>
           <p className="text-gray-600">Vamos começar com seu número de WhatsApp para confirmar o agendamento</p>
         </div>
@@ -62,13 +57,13 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
             </Label>
             <Input
               id="phone"
-              type="tel"
-              placeholder="(11) 99999-9999"
-              value={phone}
-              onChange={handlePhoneChange}
               className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
                 error ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
               }`}
+              type="tel"
+              value={phone}
+              onChange={handlePhoneChange}
+              placeholder="(11) 99999-9999"
               maxLength={15}
             />
             {error && <p className="mt-2 text-sm text-red-500">{error}</p>}

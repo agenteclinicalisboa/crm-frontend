@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-import { currency, formatDuration } from '@/app/core/shared/utils';
+import { currency, formatDate, formatDuration } from '@/app/core/shared/utils';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
@@ -15,16 +15,6 @@ interface Props {
 
 const SuccessPage = ({ bookingData }: Props) => {
   const navigate = useNavigate();
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
 
   const generateBookingId = () => {
     return 'LBC' + Math.random().toString(36).substring(2, 9).toUpperCase();

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {SuccessPage} from './SuccessPage';
-import {StepIndicator} from './StepIndicator';
+import { SuccessPage } from './SuccessPage';
+import { StepIndicator } from './StepIndicator';
 import { PhoneStep } from './steps/PhoneStep';
 import { DateTimeStep } from './steps/DateTimeStep';
 import { ServiceStep } from './steps/ServiceStep';
@@ -55,92 +55,91 @@ export default function BookingWizard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 py-8">
-      <div className="container mx-auto px-6">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 p-10">
+      <div className="container mx-auto space-y-4">
         <StepIndicator
           currentStep={currentStep}
           totalSteps={6}
           stepTitles={stepTitles}
         />
 
-        <div className="mt-8">
-          {currentStep === 1 && (
-            <PhoneStep
-              onNext={handleNext}
-              initialData={{ phone: bookingData?.phone ?? '' }}
-            />
-          )}
+        {/* TODO: Encontrar lead pelo nº, se não existir, cadastrar */}
+        {currentStep === 1 && (
+          <PhoneStep
+            onNext={handleNext}
+            initialData={{ phone: bookingData?.phone ?? '' }}
+          />
+        )}
 
-          {/* TODO: Avaliação */}
-          {currentStep === 2 && (
-            <CategoryStep
-              onNext={handleNext}
-              onBack={handleBack}
-              initialData={{ category: bookingData?.category }}
-            />
-          )}
+        {/* TODO: Avaliação */}
+        {currentStep === 2 && (
+          <CategoryStep
+            onNext={handleNext}
+            onBack={handleBack}
+            initialData={{ category: bookingData?.category }}
+          />
+        )}
 
-          {currentStep === 3 && (
-            <ServiceStep
-              onNext={handleNext}
-              onBack={handleBack}
-              initialData={{
-                category: bookingData?.category as unknown as IBookingCreate['category'],
-                service: bookingData?.service,
-              }}
-            />
-          )}
+        {currentStep === 3 && (
+          <ServiceStep
+            onNext={handleNext}
+            onBack={handleBack}
+            initialData={{
+              category: bookingData?.category as unknown as IBookingCreate['category'],
+              service: bookingData?.service,
+            }}
+          />
+        )}
 
-          {currentStep === 4 && (
-            <SubServiceStep
-              initialData={{
-                service: bookingData?.service as unknown as IBookingCreate['service'],
-                subService: bookingData?.subService,
-              }}
-              onNext={handleNext}
-              onBack={handleBack}
-            />
-          )}
+        {currentStep === 4 && (
+          <SubServiceStep
+            initialData={{
+              service: bookingData?.service as unknown as IBookingCreate['service'],
+              subService: bookingData?.subService,
+            }}
+            onNext={handleNext}
+            onBack={handleBack}
+          />
+        )}
 
-          {currentStep === 5 && (
-            <ProfessionalStep
-              onNext={handleNext}
-              onBack={handleBack}
-              initialData={{
-                service: (bookingData?.subService ?? bookingData?.service) as unknown as IBookingCreate['service'],
-                professional: bookingData?.professional,
-              }}
-            />
-          )}
+        {currentStep === 5 && (
+          <ProfessionalStep
+            onNext={handleNext}
+            onBack={handleBack}
+            initialData={{
+              service: (bookingData?.subService ?? bookingData?.service) as unknown as IBookingCreate['service'],
+              professional: bookingData?.professional,
+            }}
+          />
+        )}
 
-          {currentStep === 6 && (
-            <DateTimeStep
-              onNext={handleNext}
-              onBack={handleBack}
-              initialData={{
-                date: bookingData?.date ?? '',
-                time: bookingData?.time ?? '',
-              }}
-            />
-          )}
+        {currentStep === 6 && (
+          <DateTimeStep
+            onNext={handleNext}
+            onBack={handleBack}
+            initialData={{
+              date: bookingData?.date ?? '',
+              time: bookingData?.time ?? '',
+            }}
+          />
+        )}
 
-          {currentStep === 7 && (
-            <PhotosStep
-              onNext={() => {
-                setCurrentStep(8);
-              }}
-              onBack={handleBack}
-            />
-          )}
+        {currentStep === 7 && (
+          <PhotosStep
+            onNext={() => {
+              setCurrentStep(8);
+            }}
+            onBack={handleBack}
+          />
+        )}
 
-          {currentStep === 8 && (
-            <PaymentStep
-              bookingData={bookingData as IBookingCreate}
-              onConfirm={handleConfirm}
-              onBack={handleBack}
-            />
-          )}
-        </div>
+        {currentStep === 8 && (
+          <PaymentStep
+            bookingData={bookingData as IBookingCreate}
+            onConfirm={handleConfirm}
+            onBack={handleBack}
+          />
+        )}
       </div>
     </div>
   );

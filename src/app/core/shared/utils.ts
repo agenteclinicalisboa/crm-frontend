@@ -13,16 +13,35 @@ export const currency = (value: number) => {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
+export const formatPhone = (value: string) => {
+  const numbers = value.replace(/\D/g, '');
+  if (numbers.length <= 11) {
+    return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  }
+
+  return value;
+};
+
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
 export const formatDuration = (minutes: number): string => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
 
   if (hours > 0 && mins > 0) {
-    return `${hours}h e ${mins}m`;
+    return `${String(hours)}h e ${String(mins)}m`;
   } else if (hours > 0) {
-    return `${hours}h`;
+    return `${String(hours)}h`;
   } else {
-    return `${mins}m`;
+    return `${String(mins)}m`;
   }
 };
 

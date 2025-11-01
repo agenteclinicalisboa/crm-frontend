@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { CheckIcon } from 'lucide-react';
 
 interface Props {
   currentStep: number;
@@ -8,8 +8,8 @@ interface Props {
 
 const StepIndicator = ({ currentStep, totalSteps, stepTitles }: Props) => {
   return (
-    <div className="mb-8 w-full">
-      <div className="mb-4 flex items-center justify-between">
+    <div className="w-full space-y-4">
+      <div className="flex items-center justify-between">
         {Array.from({ length: totalSteps }, (_, index) => {
           const stepNumber = index + 1;
           const isCompleted = stepNumber < currentStep;
@@ -29,7 +29,7 @@ const StepIndicator = ({ currentStep, totalSteps, stepTitles }: Props) => {
                       : 'bg-gray-100 text-gray-400'
                 } `}
               >
-                {isCompleted ? <Check className="h-5 w-5" /> : stepNumber}
+                {isCompleted ? <CheckIcon className="h-5 w-5" /> : stepNumber}
               </div>
 
               {index < totalSteps - 1 && (
@@ -42,8 +42,8 @@ const StepIndicator = ({ currentStep, totalSteps, stepTitles }: Props) => {
         })}
       </div>
 
-      <div className="text-center">
-        <h2 className="mb-2 text-2xl font-bold text-gray-800">{stepTitles[currentStep - 1]}</h2>
+      <div className="space-y-2 text-center">
+        <h2 className="text-2xl font-bold text-gray-800">{stepTitles[currentStep - 1]}</h2>
         <p className="text-gray-500">
           Passo {currentStep} de {totalSteps}
         </p>
