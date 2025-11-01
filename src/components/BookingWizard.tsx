@@ -5,7 +5,7 @@ import StepIndicator from './StepIndicator';
 import PhoneStep from './steps/PhoneStep';
 import DateTimeStep from './steps/DateTimeStep';
 import ServiceStep from './steps/ServiceStep';
-import SubServiceStep from './steps/SubServiceStep';
+import { SubServiceStep } from './steps/SubServiceStep';
 import ProfessionalStep from './steps/ProfessionalStep';
 import PhotosStep from './steps/PhotosStep';
 import PaymentStep from './steps/PaymentStep';
@@ -104,12 +104,12 @@ export default function BookingWizard() {
 
           {currentStep === 4 && (
             <SubServiceStep
-              onNext={handleNext}
-              onBack={handleBack}
               initialData={{
                 service: bookingData?.service as unknown as IProcedure,
                 subService: bookingData?.subService,
               }}
+              onNext={handleNext}
+              onBack={handleBack}
             />
           )}
 

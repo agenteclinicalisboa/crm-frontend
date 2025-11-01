@@ -19,7 +19,7 @@ const ProcedureCard = ({ item, selected, onSelect }: Props) => {
   return (
     <div
       key={item.id}
-      className={`cursor-pointer transition-all duration-300 ${
+      className={`cursor-pointer rounded-md border transition-all duration-300 ${
         selected?.id === item.id ? 'ring-2 ring-pink-400 ring-offset-2' : ''
       }`}
       onClick={() => {

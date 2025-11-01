@@ -5,17 +5,17 @@ import { CategoryProcedureCardSkeleton } from '@/components/CategoryProcedureCar
 import type { IProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface Props {
-  category: IProcedureCategory;
+  item: IProcedureCategory;
   selected?: IProcedureCategory;
   onSelect: () => void;
 }
 
-const CategoryProcedureCard = ({ category, selected, onSelect }: Props) => {
+const CategoryProcedureCard = ({ item, selected, onSelect }: Props) => {
   return (
     <div
-      key={category.id}
-      className={`cursor-pointer transition-all duration-300 ${
-        selected?.id === category.id ? 'ring-2 ring-pink-400 ring-offset-2' : ''
+      key={item.id}
+      className={`cursor-pointer rounded-md border transition-all duration-300 ${
+        selected?.id === item.id ? 'ring-2 ring-pink-400 ring-offset-2' : ''
       }`}
       onClick={() => {
         onSelect();
@@ -23,12 +23,12 @@ const CategoryProcedureCard = ({ category, selected, onSelect }: Props) => {
     >
       <Card className="h-full rounded-2xl border-0 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-xl">
         <div className="space-y-3">
-          <h3 className="text-xl font-semibold text-gray-800">{category.name}</h3>
+          <h3 className="text-xl font-semibold text-gray-800">{item.name}</h3>
 
-          <p className="text-sm leading-relaxed text-gray-600">{category.description}</p>
+          <p className="text-sm leading-relaxed text-gray-600">{item.description}</p>
         </div>
 
-        {selected?.id === category.id && (
+        {selected?.id === item.id && (
           <div className="mt-4 rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-3">
             <p className="text-center text-sm font-medium text-pink-700">✨ Categoria selecionada</p>
           </div>
