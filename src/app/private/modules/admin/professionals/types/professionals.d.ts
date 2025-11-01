@@ -1,8 +1,8 @@
 export interface IListProfessional {
   id: number;
-  nome: string;
-  profissao: string;
-  biografia: string;
+  name: string;
+  profession: string;
+  biography: string;
   image_url: string;
 }
 

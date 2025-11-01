@@ -7,11 +7,11 @@ import { ProcedureCardSkeleton } from '@/components/ProcedureCard/skeleton';
 
 import { currency, formatDuration } from '@/app/core/shared/utils';
 
-import type { IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
 interface Props {
-  item: IProcedure;
-  selected?: IProcedure;
+  item: IBookingCreate['service'];
+  selected?: IBookingCreate['service'];
   showDetails?: boolean;
   onSelect: () => void;
 }

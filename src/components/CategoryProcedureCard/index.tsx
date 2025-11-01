@@ -2,11 +2,11 @@ import { Card } from '@/components/ui/card';
 
 import { CategoryProcedureCardSkeleton } from '@/components/CategoryProcedureCard/skeleton';
 
-import type { IProcedureCategory } from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
 interface Props {
-  item: IProcedureCategory;
-  selected?: IProcedureCategory;
+  item: IBookingCreate['category'];
+  selected?: IBookingCreate['category'];
   onSelect: () => void;
 }
 
