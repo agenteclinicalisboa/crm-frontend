@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+import { currency } from '@/app/core/shared/utils';
+
 import type { IProfessional } from '@/app/private/modules/admin/professionals/types/professionals';
 import type { IProcedure } from '@/app/private/modules/admin/procedures/types/procedures';
 
@@ -98,7 +100,7 @@ export default function SuccessPage({ bookingData }: SuccessPageProps) {
                     <p className="font-semibold text-gray-800">{bookingData.service.name}</p>
                     <p className="text-sm text-gray-600">Duração: {bookingData.service.duration}</p>
                   </div>
-                  <p className="text-2xl font-bold text-pink-600">R${bookingData.service.value}</p>
+                  <p className="text-2xl font-bold text-pink-600">{currency(bookingData.service.value)}</p>
                 </div>
               </div>
             </div>

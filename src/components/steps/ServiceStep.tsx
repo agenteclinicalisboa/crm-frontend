@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+import { currency } from '@/app/core/shared/utils';
+
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
 import type {
   IListProcedure,
@@ -94,7 +96,7 @@ export default function ServiceStep({ onNext, onBack, initialData }: ServiceStep
                     </div>
 
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-pink-600">R${item.value}</p>
+                      <p className="text-2xl font-bold text-pink-600">{currency(item.value)}</p>
                     </div>
                   </div>
                 </div>
