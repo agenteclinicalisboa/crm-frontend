@@ -9,7 +9,6 @@ export interface IListProcedure {
   category: string;
   name: string;
   description: string;
-  professional: string[];
   duration: number;
   value: number;
 }

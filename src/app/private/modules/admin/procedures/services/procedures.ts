@@ -22,6 +22,17 @@ export class ProceduresService {
     }
   };
 
+  subList = async (subCategory: string) => {
+    try {
+      const url = `/procedures/subcategory/${subCategory}`;
+      const { data } = await this.restService.get<IListProcedure[]>(url);
+
+      return { data };
+    } catch (error) {
+      return { error: getError(error) };
+    }
+  };
+
   list = async (category: string) => {
     try {
       const url = `/procedures/${category}`;

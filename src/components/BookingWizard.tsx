@@ -5,6 +5,7 @@ import StepIndicator from './StepIndicator';
 import PhoneStep from './steps/PhoneStep';
 import DateTimeStep from './steps/DateTimeStep';
 import ServiceStep from './steps/ServiceStep';
+import SubServiceStep from './steps/SubServiceStep';
 import ProfessionalStep from './steps/ProfessionalStep';
 import PhotosStep from './steps/PhotosStep';
 import PaymentStep from './steps/PaymentStep';
@@ -19,6 +20,7 @@ interface BookingData {
   time: string;
   category: IProcedureCategory;
   service: IProcedure;
+  subService: IProcedure;
   professional: IProfessional;
 }
 
@@ -27,6 +29,7 @@ type StepData =
   | { date: string; time: string }
   | { category: IProcedureCategory }
   | { service: IProcedure }
+  | { subService: IProcedure }
   | { professional: IProfessional };
 
 export default function BookingWizard() {
@@ -38,6 +41,7 @@ export default function BookingWizard() {
     'Seu contato',
     'Escolha do tipo do tratamento',
     'Escolha do tratamento',
+    'Escolha da área do tratamento',
     'Profissional',
     'Data e horário',
     'Nossos resultados',
@@ -78,6 +82,7 @@ export default function BookingWizard() {
             />
           )}
 
+          {/* TODO: Avaliação */}
           {currentStep === 2 && (
             <CategoryStep
               onNext={handleNext}
@@ -98,6 +103,17 @@ export default function BookingWizard() {
           )}
 
           {currentStep === 4 && (
+            <SubServiceStep
+              onNext={handleNext}
+              onBack={handleBack}
+              initialData={{
+                service: bookingData?.service as unknown as IProcedure,
+                subService: bookingData?.subService,
+              }}
+            />
+          )}
+
+          {currentStep === 5 && (
             <ProfessionalStep
               onNext={handleNext}
               onBack={handleBack}
@@ -105,7 +121,7 @@ export default function BookingWizard() {
             />
           )}
 
-          {currentStep === 5 && (
+          {currentStep === 6 && (
             <DateTimeStep
               onNext={handleNext}
               onBack={handleBack}
@@ -116,16 +132,16 @@ export default function BookingWizard() {
             />
           )}
 
-          {currentStep === 6 && (
+          {currentStep === 7 && (
             <PhotosStep
               onNext={() => {
-                setCurrentStep(7);
+                setCurrentStep(8);
               }}
               onBack={handleBack}
             />
           )}
 
-          {currentStep === 7 && (
+          {currentStep === 8 && (
             <PaymentStep
               bookingData={bookingData as BookingData}
               onConfirm={handleConfirm}
