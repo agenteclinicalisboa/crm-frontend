@@ -25,9 +25,9 @@ export class ProfessionalsService {
     }
   };
 
-  freeDays = async (id: number) => {
+  freeDays = async (id: number, procedure_id: number) => {
     try {
-      const url = `/professionals/${String(id)}/days-free`;
+      const url = `/professionals/${String(id)}/days-free/${String(procedure_id)}`;
       const { data } = await this.restService.get<IListProfessionalFreeDays[]>(url);
 
       return { data };

@@ -13,6 +13,7 @@ import { ProfessionalsService } from '@/app/private/modules/admin/professionals/
 
 interface DateTimeStepProps {
   initialData: {
+    service: IBookingCreate['service'];
     professional: IBookingCreate['professional'];
     date?: string;
     time?: string;
@@ -22,15 +23,16 @@ interface DateTimeStepProps {
 }
 
 const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
+  const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
   const [selectedProfessional] = React.useState<IBookingCreate['professional']>(initialData.professional);
   const [selectedDate, setSelectedDate] = React.useState(initialData.date ?? '');
   const [selectedTime, setSelectedTime] = React.useState(initialData.time ?? '');
 
   const queryProfessionalFreeDays = useQuery<IListProfessionalFreeDays[]>({
     placeholderData: keepPreviousData,
-    queryKey: ['ProfessionalFreeDays', selectedProfessional.id],
+    queryKey: ['ProfessionalFreeDays', selectedProfessional.id, selectedService.id],
     queryFn: async () => {
-      const { data, error } = await new ProfessionalsService().freeDays(selectedProfessional.id);
+      const { data, error } = await new ProfessionalsService().freeDays(selectedProfessional.id, selectedService.id);
       if (error) {
         return [];
       }
