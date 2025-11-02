@@ -7,8 +7,12 @@ export interface IListProfessional {
 }
 
 export interface IListProfessionalFreeDays {
-  label: string;
   value: string;
+  label: string;
+  times: {
+    available: boolean;
+    time: string;
+  }[];
 }
 
 export type IProfessional = IListProfessional;

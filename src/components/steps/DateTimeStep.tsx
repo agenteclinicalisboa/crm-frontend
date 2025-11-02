@@ -5,7 +5,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-import { timeSlots } from '@/data/mockData';
+import { formatTime } from '@/app/core/shared/utils';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
@@ -42,10 +42,16 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
 
   // TODO: Validar data e horário
 
-  const businessHours = React.useMemo(() => {
+  const professionalFreeDays = React.useMemo(() => {
     const items = Array.isArray(queryProfessionalFreeDays.data) ? queryProfessionalFreeDays.data : [];
     return items;
   }, [queryProfessionalFreeDays.data]);
+
+  const professionalFreeDayTimes = React.useMemo(() => {
+    const date = professionalFreeDays.find(item => item.value === selectedDate);
+    const items = Array.isArray(date?.times) ? date.times : [];
+    return items;
+  }, [professionalFreeDays, selectedDate]);
 
   const handleNext = () => {
     if (selectedDate && selectedTime) {
@@ -53,8 +59,6 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
     }
   };
 
-  console.log('queryProfessionalFreeDays', queryProfessionalFreeDays);
-  console.log('selectedProfessional', selectedProfessional);
   return (
     <div className="mx-auto max-w-2xl">
       <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
@@ -74,7 +78,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
             </h3>
 
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              {businessHours.map(date => (
+              {professionalFreeDays.map(date => (
                 <button
                   key={date.value}
                   className={`rounded-xl p-3 text-center transition-all duration-300 ${
@@ -84,6 +88,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
                   }`}
                   onClick={() => {
                     setSelectedDate(date.value);
+                    setSelectedTime('');
                   }}
                 >
                   <div className="text-sm font-medium">{date.label}</div>
@@ -101,7 +106,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
               </h3>
 
               <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
-                {timeSlots.map(slot => (
+                {professionalFreeDayTimes.map(slot => (
                   <button
                     key={slot.time}
                     className={`rounded-xl p-3 text-center transition-all duration-300 ${
@@ -116,7 +121,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
                       setSelectedTime(slot.time);
                     }}
                   >
-                    {slot.time}
+                    {formatTime(slot.time)}
                   </button>
                 ))}
               </div>

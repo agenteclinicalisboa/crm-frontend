@@ -23,13 +23,22 @@ export const formatPhone = (value: string) => {
 };
 
 export const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
+  const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
   return date.toLocaleDateString('pt-BR', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
+};
+
+export const formatTime = (dateString: string) => {
+  const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
+  return new Intl.DateTimeFormat('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'America/Sao_Paulo',
+  }).format(date);
 };
 
 export const formatDuration = (minutes: number): string => {
