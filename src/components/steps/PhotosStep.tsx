@@ -4,7 +4,32 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-import { beforeAfterPhotos } from '@/data/mockData';
+const beforeAfterPhotos = [
+  {
+    id: '1',
+    before: '/api/placeholder/200/200',
+    after: '/api/placeholder/200/200',
+    treatment: 'Limpeza de Pele',
+  },
+  {
+    id: '2',
+    before: '/api/placeholder/200/200',
+    after: '/api/placeholder/200/200',
+    treatment: 'Peeling Químico',
+  },
+  {
+    id: '3',
+    before: '/api/placeholder/200/200',
+    after: '/api/placeholder/200/200',
+    treatment: 'Anti-idade',
+  },
+  {
+    id: '4',
+    before: '/api/placeholder/200/200',
+    after: '/api/placeholder/200/200',
+    treatment: 'Hidratação Profunda',
+  },
+];
 
 interface PhotosStepProps {
   onNext: () => void;
