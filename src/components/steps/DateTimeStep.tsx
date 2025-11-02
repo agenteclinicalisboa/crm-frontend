@@ -5,27 +5,33 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-import { getNextAvailableDays } from '@/app/core/shared/utils';
 import { timeSlots } from '@/data/mockData';
 
-import type { IListBusinessHour } from '@/app/private/modules/admin/settings/types/settings';
-import { SettingsService } from '@/app/private/modules/admin/settings/services/settings';
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
+import type { IListProfessionalFreeDays } from '@/app/private/modules/admin/professionals/types/professionals';
+import { ProfessionalsService } from '@/app/private/modules/admin/professionals/services/professionals';
 
 interface DateTimeStepProps {
-  initialData?: { date: string; time: string };
+  initialData: {
+    professional: IBookingCreate['professional'];
+    date?: string;
+    time?: string;
+  };
   onNext: (data: { date: string; time: string }) => void;
   onBack: () => void;
 }
 
 const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
-  const [selectedDate, setSelectedDate] = React.useState(initialData?.date ?? '');
-  const [selectedTime, setSelectedTime] = React.useState(initialData?.time ?? '');
+  const [selectedProfessional] = React.useState<IBookingCreate['professional']>(initialData.professional);
+  const [selectedDate, setSelectedDate] = React.useState(initialData.date ?? '');
+  const [selectedTime, setSelectedTime] = React.useState(initialData.time ?? '');
 
-  const queryBusinessHour = useQuery<IListBusinessHour[]>({
+  const queryProfessionalFreeDays = useQuery<IListProfessionalFreeDays[]>({
     placeholderData: keepPreviousData,
-    queryKey: ['BusinessHour'],
+    queryKey: ['ProfessionalFreeDays', selectedProfessional.id],
     queryFn: async () => {
-      const { data, error } = await new SettingsService().businessHoursList();
+      const { data, error } = await new ProfessionalsService().freeDays(selectedProfessional.id);
       if (error) {
         return [];
       }
@@ -34,11 +40,12 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
     },
   });
 
-  const businessHours = React.useMemo(() => {
-    const items = Array.isArray(queryBusinessHour.data) ? queryBusinessHour.data : [];
+  // TODO: Validar data e horário
 
-    return getNextAvailableDays(items);
-  }, [queryBusinessHour.data]);
+  const businessHours = React.useMemo(() => {
+    const items = Array.isArray(queryProfessionalFreeDays.data) ? queryProfessionalFreeDays.data : [];
+    return items;
+  }, [queryProfessionalFreeDays.data]);
 
   const handleNext = () => {
     if (selectedDate && selectedTime) {
@@ -46,6 +53,8 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
     }
   };
 
+  console.log('queryProfessionalFreeDays', queryProfessionalFreeDays);
+  console.log('selectedProfessional', selectedProfessional);
   return (
     <div className="mx-auto max-w-2xl">
       <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">

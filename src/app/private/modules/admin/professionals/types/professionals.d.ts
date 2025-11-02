@@ -6,4 +6,9 @@ export interface IListProfessional {
   image_url: string;
 }
 
-export type IProfessional = IListProfessional
+export interface IListProfessionalFreeDays {
+  label: string;
+  value: string;
+}
+
+export type IProfessional = IListProfessional;

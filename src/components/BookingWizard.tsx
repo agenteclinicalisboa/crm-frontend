@@ -118,6 +118,7 @@ export default function BookingWizard() {
             onNext={handleNext}
             onBack={handleBack}
             initialData={{
+              professional: bookingData?.professional as unknown as IBookingCreate['professional'],
               date: bookingData?.date ?? '',
               time: bookingData?.time ?? '',
             }}
