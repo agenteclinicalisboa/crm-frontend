@@ -47,29 +47,26 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
   };
 
   const handleNext = async () => {
-    const verifyOrCreate = async () => {
+    const verifyOrCreate = async (phone: string) => {
       if (register) {
-        return await new PatientsService().create({
-          name: selected.name,
-          phone: number,
-        });
+        return await new PatientsService().create({ name: selected.name, phone });
       }
 
-      return await new PatientsService().verify(number);
+      return await new PatientsService().verify(phone);
     };
 
     if (!validatePhone(selected.phone)) {
       setError('Por favor, insira um número de celular válido');
-      toast({ title: error, type: 'error' });
+      toast({ title: 'Por favor, insira um número de celular válido', type: 'error' });
       return;
     }
 
     const number = selected.phone.replace(/\D/g, '');
-    const data = await verifyOrCreate();
+    const data = await verifyOrCreate(number);
     if (!data.data?.id) {
       setRegister(true);
       setError('Por favor, preencha o seu nome!');
-      toast({ title: error, type: 'error' });
+      toast({ title: 'Por favor, preencha o seu nome!', type: 'error' });
       return;
     }
 
@@ -132,7 +129,6 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
                 value={selected.name}
                 placeholder="Aline"
                 maxLength={15}
-                onChange={handlePhoneChange}
               />
               {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
             </div>

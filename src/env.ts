@@ -1,6 +1,6 @@
 const env = {
   api: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://api.lisboaestetica.com.br',
     baseApi: '/api/v1',
   },
   contact: {
