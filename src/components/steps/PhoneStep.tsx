@@ -30,7 +30,10 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
   );
 
   const [register, setRegister] = React.useState(false);
-  const [error, setError] = React.useState('');
+  const [error, setError] = React.useState({
+    phone: '',
+    name: '',
+  });
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhone(e.target.value);
@@ -56,7 +59,10 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
     };
 
     if (!validatePhone(selected.phone)) {
-      setError('Por favor, insira um número de celular válido');
+      setError({
+        name: '',
+        phone: 'Por favor, insira um número de celular válido',
+      });
       toast({ title: 'Por favor, insira um número de celular válido', type: 'error' });
       return;
     }
@@ -65,7 +71,10 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
     const data = await verifyOrCreate(number);
     if (!data.data?.id) {
       setRegister(true);
-      setError('Por favor, preencha o seu nome!');
+      setError({
+        name: 'Por favor, preencha o seu nome!',
+        phone: '',
+      });
       toast({ title: 'Por favor, preencha o seu nome!', type: 'error' });
       return;
     }
@@ -94,7 +103,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
             <Input
               id="phone"
               className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
-                error ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
+                error.phone ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
               }`}
               type="tel"
               value={selected.phone}
@@ -102,7 +111,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
               placeholder="(11) 99999-9999"
               maxLength={15}
             />
-            {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+            {error.phone && <p className="mt-2 text-sm text-red-500">{error.phone}</p>}
           </div>
 
           <div className="rounded-xl bg-pink-50 p-4">
@@ -124,13 +133,13 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
               <Input
                 id="name"
                 className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
-                  error ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
+                  error.name ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
                 }`}
                 value={selected.name}
                 placeholder="Aline"
                 maxLength={15}
               />
-              {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+              {error.name && <p className="mt-2 text-sm text-red-500">{error.name}</p>}
             </div>
           </div>
         )}
