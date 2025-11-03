@@ -46,6 +46,10 @@ export const formatTime = (dateString: string) => {
   }).format(date);
 };
 
+export const formatTime2 = (dateString: string) => {
+  return formatTime(dateString.replace('T', ' ').replace('.000Z', ''));
+};
+
 export const formatDuration = (minutes: number): string => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;

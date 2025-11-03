@@ -1,4 +1,4 @@
-import { formatTime } from '@/app/core/shared/utils';
+import { formatTime2 } from '@/app/core/shared/utils';
 
 interface Props {
   item: { time: string; available: boolean };
@@ -22,7 +22,7 @@ const DateTimeCard = ({ item, selected, onSelect }: Props) => {
         onSelect();
       }}
     >
-      <div className="text-sm font-medium">{formatTime(item.time)}</div>
+      <div className="text-sm font-medium">{formatTime2(item.time)}</div>
     </button>
   );
 };
