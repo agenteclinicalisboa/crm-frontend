@@ -4,6 +4,11 @@ export interface IListProcedureCategory {
   description: string;
 }
 
+export interface IProcedurePhotos {
+  id: string;
+  name: string;
+}
+
 export interface IListProcedure {
   id: number;
   category: string;

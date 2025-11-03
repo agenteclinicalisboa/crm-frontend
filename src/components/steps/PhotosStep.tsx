@@ -1,100 +1,87 @@
-import { Image, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ImageIcon } from 'lucide-react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-const beforeAfterPhotos = [
-  {
-    id: '1',
-    before: '/api/placeholder/200/200',
-    after: '/api/placeholder/200/200',
-    treatment: 'Limpeza de Pele',
-  },
-  {
-    id: '2',
-    before: '/api/placeholder/200/200',
-    after: '/api/placeholder/200/200',
-    treatment: 'Peeling Químico',
-  },
-  {
-    id: '3',
-    before: '/api/placeholder/200/200',
-    after: '/api/placeholder/200/200',
-    treatment: 'Anti-idade',
-  },
-  {
-    id: '4',
-    before: '/api/placeholder/200/200',
-    after: '/api/placeholder/200/200',
-    treatment: 'Hidratação Profunda',
-  },
-];
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
+import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
+import type { IProcedurePhotos } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface PhotosStepProps {
+  initialData: {
+    service: IBookingCreate['service'];
+  };
   onNext: () => void;
   onBack: () => void;
 }
 
-const PhotosStep = ({ onNext, onBack }: PhotosStepProps) => {
+const PhotosStep = ({ initialData, onNext, onBack }: PhotosStepProps) => {
+  const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
+
+  const queryProcedurePhotos = useQuery<IProcedurePhotos[]>({
+    placeholderData: keepPreviousData,
+    queryKey: ['ProcedurePhotos', selectedService.name],
+    queryFn: async () => {
+      const { data, error } = await new ProceduresService().photos(selectedService.name);
+      if (error) {
+        return [];
+      }
+
+      return data ?? [];
+    },
+  });
+
+  const photos = React.useMemo(() => {
+    const items = Array.isArray(queryProcedurePhotos.data) ? queryProcedurePhotos.data : [];
+
+    return items.map(item => ({
+      id: item.id,
+      photo_url: `https://lh3.googleusercontent.com/d/${item.id}=w1000?authuser=1/view`,
+    }));
+  }, [queryProcedurePhotos.data]);
+
   return (
     <div className="mx-auto max-w-4xl">
-      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
-        <div className="mb-6 text-center">
+      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm space-y-6">
+        <div className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
-            <Image className="h-8 w-8 text-pink-500" />
+            <ImageIcon className="h-8 w-8 text-pink-500" />
           </div>
           <h3 className="mb-2 text-2xl font-bold text-gray-800">Resultados que falam por si</h3>
           <p className="text-gray-600">Veja alguns dos nossos resultados antes de finalizar seu agendamento</p>
         </div>
 
-        <div className="mb-8 grid gap-8 md:grid-cols-2">
-          {beforeAfterPhotos.map(photo => (
+        <div className="grid gap-8 md:grid-cols-3">
+          {photos.map(photo => (
             <Card
               key={photo.id}
-              className="rounded-2xl border-0 bg-white p-6 shadow-md"
+              className="relative rounded-2xl border-0 bg-white p-3 shadow-md"
             >
-              <div className="mb-4">
+              <div className="absolute right-3">
                 <Badge
                   variant="secondary"
-                  className="mb-4 bg-pink-100 text-pink-700 hover:bg-pink-100"
+                  className="bg-pink-100 text-pink-700 hover:bg-pink-100"
                 >
-                  {photo.treatment}
+                  {selectedService.name}
                 </Badge>
               </div>
 
-              <div className="flex items-center gap-4">
-                <div className="flex-1">
-                  <p className="mb-2 text-center text-sm font-medium text-gray-600">Antes</p>
-                  <div className="aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-200">
-                    <img
-                      src={photo.before}
-                      alt="Antes do tratamento"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-center">
-                  <ArrowRight className="h-6 w-6 text-pink-500" />
-                </div>
-
-                <div className="flex-1">
-                  <p className="mb-2 text-center text-sm font-medium text-gray-600">Depois</p>
-                  <div className="aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-pink-100 to-rose-100">
-                    <img
-                      src={photo.after}
-                      alt="Depois do tratamento"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
+              <div className="aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-200">
+                <img
+                  className="h-auto w-full object-cover"
+                  alt="Antes e depois do tratamento"
+                  src={photo.photo_url}
+                />
               </div>
             </Card>
           ))}
         </div>
 
-        <div className="mb-6 rounded-2xl bg-gradient-to-r from-pink-50 to-rose-50 p-6 text-center">
+        <div className="rounded-2xl bg-gradient-to-r from-pink-50 to-rose-50 p-6 text-center">
           <h4 className="mb-2 text-lg font-semibold text-pink-800">✨ Sua transformação começa aqui</h4>
           <p className="text-pink-700">
             Cada resultado é único e personalizado. Estamos ansiosos para ajudar você a alcançar seus objetivos de

@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Calendar, Clock, User, Phone, Home, MessageCircle } from 'lucide-react';
 
+import { env } from '@/env';
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-import { currency, formatDate, formatDuration } from '@/app/core/shared/utils';
+import { currency, formatDate, formatDuration, formatTime } from '@/app/core/shared/utils';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
@@ -18,6 +20,13 @@ const SuccessPage = ({ bookingData }: Props) => {
 
   const generateBookingId = () => {
     return 'LBC' + Math.random().toString(36).substring(2, 9).toUpperCase();
+  };
+
+  const toggleCallWhatsapp = () => {
+    const number = env.contact.phone.replace(/\D/g, '');
+    const text = `Olá! Acabei de fazer um agendamento (ID: ${bookingId}) e gostaria de confirmar os detalhes.`;
+
+    window.open(`https://wa.me/${number}?text=${text}`, '_blank');
   };
 
   const bookingId = generateBookingId();
@@ -52,7 +61,7 @@ const SuccessPage = ({ bookingData }: Props) => {
                   <Calendar className="h-6 w-6 text-pink-600" />
                   <div>
                     <p className="text-sm text-gray-600">Data</p>
-                    <p className="font-semibold text-gray-800">{formatDate(bookingData.date)}</p>
+                    <p className="font-semibold text-gray-800">{formatDate(`${bookingData.date}T10:00:00.000Z`)}</p>
                   </div>
                 </div>
 
@@ -60,7 +69,7 @@ const SuccessPage = ({ bookingData }: Props) => {
                   <Clock className="h-6 w-6 text-pink-600" />
                   <div>
                     <p className="text-sm text-gray-600">Horário</p>
-                    <p className="font-semibold text-gray-800">{bookingData.time}</p>
+                    <p className="font-semibold text-gray-800">{formatTime(bookingData.time)}</p>
                   </div>
                 </div>
               </div>
@@ -69,8 +78,8 @@ const SuccessPage = ({ bookingData }: Props) => {
                 <User className="h-6 w-6 text-rose-600" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600">Profissional</p>
-                  <p className="font-semibold text-gray-800">{bookingData.professional.nome}</p>
-                  <p className="text-sm text-rose-600">{bookingData.professional.profissao}</p>
+                  <p className="font-semibold text-gray-800">{bookingData.professional.name}</p>
+                  <p className="text-sm text-rose-600">{bookingData.professional.profession}</p>
                 </div>
               </div>
 
@@ -96,7 +105,7 @@ const SuccessPage = ({ bookingData }: Props) => {
                 <div>
                   <p className="font-medium text-gray-800">Confirmação por WhatsApp</p>
                   <p className="text-sm text-gray-600">
-                    Enviaremos uma mensagem para <strong>{bookingData.phone}</strong> com todos os detalhes
+                    Enviaremos uma mensagem para <strong>{bookingData.patient.phone}</strong> com todos os detalhes
                   </p>
                 </div>
               </div>
@@ -144,13 +153,10 @@ const SuccessPage = ({ bookingData }: Props) => {
             </Button>
 
             <Button
-              onClick={() =>
-                window.open(
-                  `https://wa.me/5521999999999?text=Olá! Acabei de fazer um agendamento (ID: ${bookingId}) e gostaria de confirmar os detalhes.`,
-                  '_blank'
-                )
-              }
               className="flex-1 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-600 hover:shadow-xl"
+              onClick={() => {
+                toggleCallWhatsapp();
+              }}
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Falar no WhatsApp

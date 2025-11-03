@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 
-import { currency, formatDuration } from '@/app/core/shared/utils';
+import { currency, formatDate, formatDuration, formatTime } from '@/app/core/shared/utils';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
@@ -25,16 +25,6 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsProcessing(false);
     onConfirm();
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   };
 
   return (
@@ -56,7 +46,7 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
                 <Phone className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">WhatsApp</p>
-                  <p className="font-semibold text-gray-800">{bookingData.phone}</p>
+                  <p className="font-semibold text-gray-800">{bookingData.patient.phone}</p>
                 </div>
               </div>
 
@@ -64,7 +54,7 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
                 <Calendar className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Data</p>
-                  <p className="font-semibold text-gray-800">{formatDate(bookingData.date)}</p>
+                  <p className="font-semibold text-gray-800">{formatDate(`${bookingData.date}T10:00:00.000Z`)}</p>
                 </div>
               </div>
 
@@ -72,7 +62,7 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
                 <Clock className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Horário</p>
-                  <p className="font-semibold text-gray-800">{bookingData.time}</p>
+                  <p className="font-semibold text-gray-800">{formatTime(bookingData.time)}</p>
                 </div>
               </div>
 
@@ -80,8 +70,8 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
                 <User className="h-5 w-5 text-pink-600" />
                 <div>
                   <p className="text-sm text-gray-600">Profissional</p>
-                  <p className="font-semibold text-gray-800">{bookingData.professional.nome}</p>
-                  <p className="text-sm text-pink-600">{bookingData.professional.profissao}</p>
+                  <p className="font-semibold text-gray-800">{bookingData.professional.name}</p>
+                  <p className="text-sm text-pink-600">{bookingData.professional.profession}</p>
                 </div>
               </div>
             </div>

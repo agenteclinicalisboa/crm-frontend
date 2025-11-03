@@ -5,6 +5,7 @@ import { RestService } from '@/app/core/services/rest.service';
 import type {
   IListProcedure,
   IListProcedureCategory,
+  IProcedurePhotos,
   IProfessionalsProcedure,
 } from '@/app/private/modules/admin/procedures/types/procedures';
 
@@ -52,6 +53,17 @@ export class ProceduresService {
     try {
       const url = `/procedures/category/${category}`;
       const { data } = await this.restService.get<IListProcedure[]>(url);
+
+      return { data };
+    } catch (error) {
+      return { error: getError(error) };
+    }
+  };
+
+  photos = async (name: string) => {
+    try {
+      const url = `/procedures/${name}/photos`;
+      const { data } = await this.restService.get<IProcedurePhotos[]>(url);
 
       return { data };
     } catch (error) {

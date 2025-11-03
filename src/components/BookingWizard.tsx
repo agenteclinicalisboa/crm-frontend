@@ -130,6 +130,9 @@ export default function BookingWizard() {
 
         {currentStep === 7 && (
           <PhotosStep
+            initialData={{
+              service: bookingData?.service as unknown as IBookingCreate['service'],
+            }}
             onNext={() => {
               setCurrentStep(8);
             }}
