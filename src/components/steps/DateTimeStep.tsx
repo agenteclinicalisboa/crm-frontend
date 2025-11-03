@@ -7,12 +7,14 @@ import { DateCard, DateCardSkeleton } from '@/components/DateCard';
 import { DateTimeCard } from '@/components/DateTimeCard';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+import { BookingService } from '@/app/private/modules/client/booking/services/bookings';
 
 import type { IListProfessionalFreeDays } from '@/app/private/modules/admin/professionals/types/professionals';
 import { ProfessionalsService } from '@/app/private/modules/admin/professionals/services/professionals';
 
 interface DateTimeStepProps {
   initialData: {
+    patient: IBookingCreate['patient'];
     service: IBookingCreate['service'];
     professional: IBookingCreate['professional'];
     date?: string;
@@ -23,11 +25,13 @@ interface DateTimeStepProps {
 }
 
 const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
+  const [selectedPatient] = React.useState<IBookingCreate['patient']>(initialData.patient);
   const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
   const [selectedProfessional] = React.useState<IBookingCreate['professional']>(initialData.professional);
   const [selectedDate, setSelectedDate] = React.useState(initialData.date ?? '');
   const [selectedTime, setSelectedTime] = React.useState(initialData.time ?? '');
 
+  // TODO: Verificar horário de atendimento, 12hrs, 21hrs, almoço, encerramento
   const queryProfessionalFreeDays = useQuery<IListProfessionalFreeDays[]>({
     placeholderData: keepPreviousData,
     queryKey: ['ProfessionalFreeDays', selectedProfessional.id, selectedService.id],
@@ -41,8 +45,6 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
     },
   });
 
-  // TODO: Validar data e horário
-
   const professionalFreeDays = React.useMemo(() => {
     const items = Array.isArray(queryProfessionalFreeDays.data) ? queryProfessionalFreeDays.data : [];
     return items;
@@ -54,10 +56,22 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
     return items;
   }, [professionalFreeDays, selectedDate]);
 
-  const handleNext = () => {
-    if (selectedDate && selectedTime) {
-      onNext({ date: selectedDate, time: selectedTime });
+  const handleNext = async () => {
+    if (!selectedDate || !selectedTime) {
+      return;
     }
+
+    const next = await new BookingService().availability(selectedProfessional.id, {
+      patient_id: selectedPatient.id,
+      procedure_id: selectedService.id,
+      date: selectedDate,
+      time_start: new Date(selectedTime).toLocaleTimeString('pt-BR'),
+    });
+    if (next.error || !next.data) {
+      return;
+    }
+
+    onNext({ date: selectedDate, time: selectedTime });
   };
 
   return (
@@ -65,7 +79,9 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
       title="Escolha o melhor dia e horário para seu atendimento"
       icon={<CalendarIcon className="h-6 w-6 text-pink-500" />}
       canNext={!!selectedDate && !!selectedTime}
-      handleNext={handleNext}
+      handleNext={() => {
+        void handleNext();
+      }}
       onBack={onBack}
     >
       <div className="flex justify-evenly py-4">

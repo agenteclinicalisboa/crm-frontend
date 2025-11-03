@@ -63,33 +63,32 @@ export default function BookingWizard() {
           stepTitles={stepTitles}
         />
 
-        {/* TODO: Encontrar lead pelo nº, se não existir, cadastrar */}
         {currentStep === 1 && (
           <PhoneStep
-            onNext={handleNext}
             initialData={{
               patient: bookingData?.patient as unknown as IBookingCreate['patient'],
             }}
+            onNext={handleNext}
           />
         )}
 
         {/* TODO: Avaliação */}
         {currentStep === 2 && (
           <CategoryStep
+            initialData={{ category: bookingData?.category }}
             onNext={handleNext}
             onBack={handleBack}
-            initialData={{ category: bookingData?.category }}
           />
         )}
 
         {currentStep === 3 && (
           <ServiceStep
-            onNext={handleNext}
-            onBack={handleBack}
             initialData={{
               category: bookingData?.category as unknown as IBookingCreate['category'],
               service: bookingData?.service,
             }}
+            onNext={handleNext}
+            onBack={handleBack}
           />
         )}
 
@@ -106,25 +105,26 @@ export default function BookingWizard() {
 
         {currentStep === 5 && (
           <ProfessionalStep
-            onNext={handleNext}
-            onBack={handleBack}
             initialData={{
               service: (bookingData?.subService ?? bookingData?.service) as unknown as IBookingCreate['service'],
               professional: bookingData?.professional,
             }}
+            onNext={handleNext}
+            onBack={handleBack}
           />
         )}
 
         {currentStep === 6 && (
           <DateTimeStep
-            onNext={handleNext}
-            onBack={handleBack}
             initialData={{
+              patient: bookingData?.patient as unknown as IBookingCreate['patient'],
               service: bookingData?.subService as unknown as IBookingCreate['service'],
               professional: bookingData?.professional as unknown as IBookingCreate['professional'],
               date: bookingData?.date ?? '',
               time: bookingData?.time ?? '',
             }}
+            onNext={handleNext}
+            onBack={handleBack}
           />
         )}
 
