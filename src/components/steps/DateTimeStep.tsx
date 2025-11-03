@@ -6,6 +6,8 @@ import { Step } from '@/components/steps';
 import { DateCard, DateCardSkeleton } from '@/components/DateCard';
 import { DateTimeCard } from '@/components/DateTimeCard';
 
+import { useToast } from '@/app/core/hooks/useToast';
+
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 import { BookingService } from '@/app/private/modules/client/booking/services/bookings';
 
@@ -25,6 +27,8 @@ interface DateTimeStepProps {
 }
 
 const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
+  const { toast } = useToast();
+
   const [selectedPatient] = React.useState<IBookingCreate['patient']>(initialData.patient);
   const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
   const [selectedProfessional] = React.useState<IBookingCreate['professional']>(initialData.professional);
@@ -58,6 +62,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
 
   const handleNext = async () => {
     if (!selectedDate || !selectedTime) {
+      toast({ title: 'Verifique a seleção de data e horário', type: 'warning' });
       return;
     }
 
@@ -68,6 +73,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
       time_start: new Date(selectedTime).toLocaleTimeString('pt-BR'),
     });
     if (next.error || !next.data) {
+      toast({ title: 'Parece que o horário já foi reservado!', type: 'error' });
       return;
     }
 

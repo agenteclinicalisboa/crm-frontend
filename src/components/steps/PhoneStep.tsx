@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 
+import { useToast } from '@/app/core/hooks/useToast';
 import { formatPhone } from '@/app/core/shared/utils';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
@@ -18,6 +19,8 @@ interface PhoneStepProps {
 }
 
 const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
+  const { toast } = useToast();
+
   const [selected, setSelected] = React.useState<IBookingCreate['patient']>(
     initialData?.patient ?? {
       id: 0,
@@ -36,7 +39,6 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
       name: '',
       phone: formatted,
     });
-    setError('');
   };
 
   const validatePhone = (phoneNumber: string) => {
@@ -58,6 +60,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
 
     if (!validatePhone(selected.phone)) {
       setError('Por favor, insira um número de celular válido');
+      toast({ title: error, type: 'error' });
       return;
     }
 
@@ -66,6 +69,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
     if (!data.data?.id) {
       setRegister(true);
       setError('Por favor, preencha o seu nome!');
+      toast({ title: error, type: 'error' });
       return;
     }
 
