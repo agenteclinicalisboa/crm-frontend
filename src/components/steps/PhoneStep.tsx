@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { PhoneIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -8,18 +8,34 @@ import { Card } from '@/components/ui/card';
 
 import { formatPhone } from '@/app/core/shared/utils';
 
+import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
+
+import { PatientsService } from '@/app/private/modules/admin/patients/services/patients';
+
 interface PhoneStepProps {
-  onNext: (data: { phone: string }) => void;
-  initialData?: { phone: string };
+  initialData?: { patient: IBookingCreate['patient'] };
+  onNext: (data: { patient: IBookingCreate['patient'] }) => void;
 }
 
 const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
-  const [phone, setPhone] = useState(initialData?.phone ?? '');
-  const [error, setError] = useState('');
+  const [selected, setSelected] = React.useState<IBookingCreate['patient']>(
+    initialData?.patient ?? {
+      id: 0,
+      name: '',
+      phone: '',
+    }
+  );
+
+  const [register, setRegister] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhone(e.target.value);
-    setPhone(formatted);
+    setSelected({
+      id: 0,
+      name: '',
+      phone: formatted,
+    });
     setError('');
   };
 
@@ -28,13 +44,32 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
     return numbers.length === 11;
   };
 
-  const handleNext = () => {
-    if (!validatePhone(phone)) {
+  const handleNext = async () => {
+    const verifyOrCreate = async () => {
+      if (register) {
+        return await new PatientsService().create({
+          name: selected.name,
+          phone: number,
+        });
+      }
+
+      return await new PatientsService().verify(number);
+    };
+
+    if (!validatePhone(selected.phone)) {
       setError('Por favor, insira um número de celular válido');
       return;
     }
 
-    onNext({ phone });
+    const number = selected.phone.replace(/\D/g, '');
+    const data = await verifyOrCreate();
+    if (!data.data?.id) {
+      setRegister(true);
+      setError('Por favor, preencha o seu nome!');
+      return;
+    }
+
+    onNext({ patient: data.data });
   };
 
   return (
@@ -61,7 +96,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
                 error ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
               }`}
               type="tel"
-              value={phone}
+              value={selected.phone}
               onChange={handlePhoneChange}
               placeholder="(11) 99999-9999"
               maxLength={15}
@@ -76,9 +111,36 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
           </div>
         </div>
 
+        {register && (
+          <div className="space-y-4">
+            <div>
+              <Label
+                htmlFor="name"
+                className="font-medium text-gray-700"
+              >
+                Seu nome *
+              </Label>
+              <Input
+                id="name"
+                className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
+                  error ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
+                }`}
+                value={selected.name}
+                placeholder="Aline"
+                maxLength={15}
+                onChange={handlePhoneChange}
+              />
+              {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+            </div>
+          </div>
+        )}
+
         <Button
           className="mt-6 w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl"
-          onClick={handleNext}
+          disabled={(!register && !selected.phone) || (register && (!selected.name || !selected.id))}
+          onClick={() => {
+            void handleNext();
+          }}
         >
           Continuar
         </Button>

@@ -25,7 +25,7 @@ const stepTitles = [
 ];
 
 type StepData =
-  | { phone: string }
+  | { patient: IBookingCreate['patient'] }
   | { date: string; time: string }
   | { category: IBookingCreate['category'] }
   | { service: IBookingCreate['service'] }
@@ -67,7 +67,9 @@ export default function BookingWizard() {
         {currentStep === 1 && (
           <PhoneStep
             onNext={handleNext}
-            initialData={{ phone: bookingData?.phone ?? '' }}
+            initialData={{
+              patient: bookingData?.patient as unknown as IBookingCreate['patient'],
+            }}
           />
         )}
 
