@@ -57,9 +57,15 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
         name: 'Por favor, preencha o seu nome!',
         phone: '',
       });
-      toast({ title: 'Por favor, preencha o seu nome!', type: 'error' });
+      toast({ title: 'Por favor, preencha o seu nome!', type: 'warning' });
       return;
     }
+
+    setSelected({
+      id: data.data.id,
+      name: data.data.name,
+      phone: data.data.phone,
+    });
 
     onNext({ patient: data.data });
   };
