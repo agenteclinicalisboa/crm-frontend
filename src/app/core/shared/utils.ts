@@ -13,6 +13,11 @@ export const currency = (value: number) => {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
+export const validatePhone = (phoneNumber: string) => {
+  const numbers = phoneNumber.replace(/\D/g, '');
+  return numbers.length === 11;
+};
+
 export const formatPhone = (value: string) => {
   const numbers = value.replace(/\D/g, '');
   if (numbers.length <= 11) {
