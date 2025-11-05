@@ -4,12 +4,13 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+
+import { PhotoProcedureCard, PhotoProcedureCardSkeleton } from '@/components/PhotoProcedureCard';
 
 import type { IBookingCreate } from '@/app/private/modules/client/booking/types/booking';
 
 import { ProceduresService } from '@/app/private/modules/admin/procedures/services/procedures';
-import type { IProcedurePhotos } from '@/app/private/modules/admin/procedures/types/procedures';
+import type { IProcedurePhoto } from '@/app/private/modules/admin/procedures/types/procedures';
 
 interface PhotosStepProps {
   initialData: {
@@ -22,7 +23,7 @@ interface PhotosStepProps {
 const PhotosStep = ({ initialData, onNext, onBack }: PhotosStepProps) => {
   const [selectedService] = React.useState<IBookingCreate['service']>(initialData.service);
 
-  const queryProcedurePhotos = useQuery<IProcedurePhotos[]>({
+  const queryProcedurePhotos = useQuery<IProcedurePhoto[]>({
     placeholderData: keepPreviousData,
     queryKey: ['ProcedurePhotos', selectedService.name],
     queryFn: async () => {
@@ -55,30 +56,25 @@ const PhotosStep = ({ initialData, onNext, onBack }: PhotosStepProps) => {
           <p className="text-gray-600">Veja alguns dos nossos resultados antes de finalizar seu agendamento</p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {photos.map(photo => (
-            <Card
-              key={photo.id}
-              className="relative rounded-2xl border-0 bg-white p-3 shadow-md"
-            >
-              <div className="absolute right-3">
-                <Badge
-                  variant="secondary"
-                  className="bg-pink-100 text-pink-700 hover:bg-pink-100"
-                >
-                  {selectedService.name}
-                </Badge>
-              </div>
-
-              <div className="aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-200">
-                <img
-                  className="h-auto w-full object-cover"
-                  alt="Antes e depois do tratamento"
-                  src={photo.photo_url}
+        <div className="m-1 grid gap-3 md:grid-cols-3 md:gap-6">
+          {queryProcedurePhotos.isLoading ? (
+            <>
+              <PhotoProcedureCardSkeleton />
+              <PhotoProcedureCardSkeleton />
+              <PhotoProcedureCardSkeleton />
+            </>
+          ) : (
+            <>
+              {photos.map(photo => (
+                <PhotoProcedureCard
+                  key={photo.id}
+                  id={photo.id}
+                  photo_url={photo.photo_url}
+                  procedure={selectedService.name}
                 />
-              </div>
-            </Card>
-          ))}
+              ))}
+            </>
+          )}
         </div>
 
         <div className="space-y-2 rounded-2xl bg-gradient-to-r from-pink-50 to-rose-50 p-4 text-center md:p-6">

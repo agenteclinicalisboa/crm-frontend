@@ -4,7 +4,7 @@ export interface IListProcedureCategory {
   description: string;
 }
 
-export interface IProcedurePhotos {
+export interface IProcedurePhoto {
   id: string;
   name: string;
 }
