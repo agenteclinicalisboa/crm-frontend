@@ -45,13 +45,13 @@ const PhotosStep = ({ initialData, onNext, onBack }: PhotosStepProps) => {
   }, [queryProcedurePhotos.data]);
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm space-y-6">
-        <div className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
-            <ImageIcon className="h-8 w-8 text-pink-500" />
+    <div className="mx-auto md:max-w-4xl">
+      <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm md:space-y-6 md:p-8">
+        <div className="space-y-3 text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 md:h-16 md:w-16">
+            <ImageIcon className="h-6 w-6 text-pink-500 md:h-8 md:w-8" />
           </div>
-          <h3 className="mb-2 text-2xl font-bold text-gray-800">Resultados que falam por si</h3>
+          <h3 className="text-xl font-bold text-gray-800 md:text-2xl">Resultados que falam por si</h3>
           <p className="text-gray-600">Veja alguns dos nossos resultados antes de finalizar seu agendamento</p>
         </div>
 
@@ -81,9 +81,9 @@ const PhotosStep = ({ initialData, onNext, onBack }: PhotosStepProps) => {
           ))}
         </div>
 
-        <div className="rounded-2xl bg-gradient-to-r from-pink-50 to-rose-50 p-6 text-center">
-          <h4 className="mb-2 text-lg font-semibold text-pink-800">✨ Sua transformação começa aqui</h4>
-          <p className="text-pink-700">
+        <div className="space-y-2 rounded-2xl bg-gradient-to-r from-pink-50 to-rose-50 p-4 text-center md:p-6">
+          <h4 className="font-semibold text-pink-800 md:text-lg">✨ Sua transformação começa aqui</h4>
+          <p className="text-sm text-pink-700 md:text-base">
             Cada resultado é único e personalizado. Estamos ansiosos para ajudar você a alcançar seus objetivos de
             beleza e bem-estar.
           </p>

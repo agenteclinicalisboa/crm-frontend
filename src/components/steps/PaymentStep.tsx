@@ -28,18 +28,18 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
   };
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
-        <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
-            <CreditCard className="h-8 w-8 text-pink-500" />
+    <div className="mx-auto md:max-w-2xl">
+      <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm md:p-8">
+        <div className="space-y-2 text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 md:h-16 md:w-16">
+            <CreditCard className="h-6 w-6 text-pink-500 md:h-8 md:w-8" />
           </div>
-          <h3 className="mb-2 text-2xl font-bold text-gray-800">Resumo do agendamento</h3>
+          <h3 className="text-xl font-bold text-gray-800 md:text-2xl">Resumo do agendamento</h3>
           <p className="text-gray-600">Confirme os detalhes antes de finalizar</p>
         </div>
 
         {/* Booking Summary */}
-        <div className="mb-8 space-y-6">
+        <div className="space-y-6">
           <Card className="rounded-2xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-6">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
@@ -105,7 +105,7 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
         </div>
 
         {/* Payment Method */}
-        <Card className="mb-6 rounded-2xl border-0 bg-white p-6 shadow-md">
+        <Card className="rounded-2xl border-0 bg-white p-6 shadow-md">
           <h4 className="mb-4 font-semibold text-gray-800">Forma de pagamento</h4>
           <div className="rounded-xl border border-green-200 bg-green-50 p-4">
             <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ const PaymentStep = ({ bookingData, onConfirm, onBack }: PaymentStepProps) => {
           </div>
         </Card>
 
-        <div className="mb-6 rounded-xl bg-pink-50 p-4">
+        <div className="rounded-xl bg-pink-50 p-4">
           <p className="text-sm text-pink-700">
             💖 <strong>Quase lá!</strong> Ao confirmar, enviaremos todos os detalhes do seu agendamento via WhatsApp.
           </p>

@@ -4,7 +4,7 @@ import { Sparkles, Heart, Star, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-import heroImage from "@/assets/hero-beauty.jpg";
+import heroImage from '@/assets/hero-beauty.jpg';
 
 export default function Index() {
   const navigate = useNavigate();
@@ -15,11 +15,11 @@ export default function Index() {
       <header className="container mx-auto px-6 py-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-white" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-400 to-rose-400">
+              <Sparkles className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
+              <h1 className="bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-2xl font-bold text-transparent">
                 Lisboa Beauty Center
               </h1>
               <p className="text-sm text-gray-500">Clínica de Estética</p>
@@ -30,7 +30,7 @@ export default function Index() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-5xl font-bold leading-tight">
@@ -40,25 +40,26 @@ export default function Index() {
                 </span>
                 especial
               </h2>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                Descubra tratamentos personalizados que realçam sua beleza natural
-                em um ambiente acolhedor e moderno.
+              <p className="text-xl leading-relaxed text-gray-600">
+                Descubra tratamentos personalizados que realçam sua beleza natural em um ambiente acolhedor e moderno.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Button
+                className="rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 px-8 py-6 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl"
                 size="lg"
-                className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={() => navigate('/agendar')}
+                onClick={() => {
+                  navigate('/agendar');
+                }}
               >
-                <Calendar className="w-5 h-5 mr-2" />
+                <Calendar className="mr-2 h-5 w-5" />
                 Agendar agora
               </Button>
               <Button
+                className="!hover:bg-transparent rounded-2xl border-pink-300 !bg-transparent px-8 py-6 text-lg font-semibold text-pink-600 transition-all duration-300 hover:border-pink-400"
                 variant="outline"
                 size="lg"
-                className="!bg-transparent !hover:bg-transparent border-pink-300 text-pink-600 px-8 py-6 rounded-2xl text-lg font-semibold hover:border-pink-400 transition-all duration-300"
               >
                 Conhecer tratamentos
               </Button>
@@ -68,65 +69,73 @@ export default function Index() {
           <div className="relative">
             <div className="relative z-10">
               <img
+                className="w-full rounded-3xl object-cover shadow-2xl"
                 src={heroImage}
                 alt="Ambiente da clínica"
-                className="rounded-3xl shadow-2xl w-full object-cover"
               />
             </div>
-            <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-pink-200 to-rose-200 rounded-3xl -z-10"></div>
+            <div className="absolute -right-4 -top-4 -z-10 h-full w-full rounded-3xl bg-gradient-to-br from-pink-200 to-rose-200"></div>
           </div>
         </div>
       </section>
 
       {/* Features */}
       <section className="container mx-auto px-6 py-16">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-gray-800 mb-4">Por que escolher a Lisboa Beauty?</h3>
-          <p className="text-gray-600 text-lg">Excelência em cada detalhe do seu cuidado</p>
+        <div className="mb-12 text-center">
+          <h3 className="mb-4 text-3xl font-bold text-gray-800">Por que escolher a Lisboa Beauty?</h3>
+          <p className="text-lg text-gray-600">Excelência em cada detalhe do seu cuidado</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          <Card className="p-8 text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl bg-white/80 backdrop-blur-sm">
-            <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Heart className="w-8 h-8 text-pink-500" />
+        <div className="grid gap-8 md:grid-cols-3">
+          <Card className="rounded-2xl border-0 bg-white/80 p-8 text-center shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+              <Heart className="h-8 w-8 text-pink-500" />
             </div>
-            <h4 className="text-xl font-semibold text-gray-800 mb-3">Cuidado Personalizado</h4>
-            <p className="text-gray-600">Cada tratamento é desenvolvido especialmente para você e suas necessidades únicas.</p>
+            <h4 className="mb-3 text-xl font-semibold text-gray-800">Cuidado Personalizado</h4>
+            <p className="text-gray-600">
+              Cada tratamento é desenvolvido especialmente para você e suas necessidades únicas.
+            </p>
           </Card>
 
-          <Card className="p-8 text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl bg-white/80 backdrop-blur-sm">
-            <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Star className="w-8 h-8 text-pink-500" />
+          <Card className="rounded-2xl border-0 bg-white/80 p-8 text-center shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+              <Star className="h-8 w-8 text-pink-500" />
             </div>
-            <h4 className="text-xl font-semibold text-gray-800 mb-3">Profissionais Qualificados</h4>
-            <p className="text-gray-600">Nossa equipe é formada por especialistas com anos de experiência e formação continuada.</p>
+            <h4 className="mb-3 text-xl font-semibold text-gray-800">Profissionais Qualificados</h4>
+            <p className="text-gray-600">
+              Nossa equipe é formada por especialistas com anos de experiência e formação continuada.
+            </p>
           </Card>
 
-          <Card className="p-8 text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl bg-white/80 backdrop-blur-sm">
-            <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Sparkles className="w-8 h-8 text-pink-500" />
+          <Card className="rounded-2xl border-0 bg-white/80 p-8 text-center shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
+              <Sparkles className="h-8 w-8 text-pink-500" />
             </div>
-            <h4 className="text-xl font-semibold text-gray-800 mb-3">Tecnologia Avançada</h4>
-            <p className="text-gray-600">Utilizamos equipamentos de última geração para resultados seguros e eficazes.</p>
+            <h4 className="mb-3 text-xl font-semibold text-gray-800">Tecnologia Avançada</h4>
+            <p className="text-gray-600">
+              Utilizamos equipamentos de última geração para resultados seguros e eficazes.
+            </p>
           </Card>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="container mx-auto px-6 py-16">
-        <Card className="p-12 text-center border-0 shadow-xl rounded-3xl bg-gradient-to-br from-pink-500 to-rose-500 text-white">
-          <h3 className="text-3xl font-bold mb-4">Pronta para se cuidar?</h3>
-          <p className="text-xl mb-8 text-pink-100">
+        <Card className="rounded-3xl border-0 bg-gradient-to-br from-pink-500 to-rose-500 p-12 text-center text-white shadow-xl">
+          <h3 className="mb-4 text-3xl font-bold">Pronta para se cuidar?</h3>
+          <p className="mb-8 text-xl text-pink-100">
             Agende seu horário em poucos cliques e comece sua jornada de bem-estar.
           </p>
           <Button
+            className="rounded-2xl bg-white px-6 py-6 font-semibold text-pink-600 shadow-lg transition-all duration-300 hover:bg-pink-50 hover:shadow-xl md:px-8 md:text-lg"
             size="lg"
             variant="secondary"
-            className="bg-white text-pink-600 hover:bg-pink-50 px-8 py-6 rounded-2xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            onClick={() => navigate('/agendar')}
+            onClick={() => {
+              navigate('/agendar');
+            }}
           >
-            <Calendar className="w-5 h-5 mr-2" />
-            Começar agendamento
+            <Calendar className="h-5 w-5 md:mr-2" />
+            Fazer agendandamento
           </Button>
         </Card>
       </section>

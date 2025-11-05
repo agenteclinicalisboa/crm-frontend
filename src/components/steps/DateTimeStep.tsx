@@ -90,7 +90,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
       }}
       onBack={onBack}
     >
-      <div className="flex justify-evenly py-4">
+      <div className="flex flex-col gap-4 py-4 md:flex-row md:justify-evenly">
         {/* Date Selection */}
         <div className="space-y-4">
           <h3 className="flex items-center text-lg font-semibold text-gray-800">
@@ -98,7 +98,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
             Selecione a data
           </h3>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-3 gap-3 md:gap-6">
             {queryProfessionalFreeDays.isLoading ? (
               <>
                 {Array(9)
@@ -133,7 +133,7 @@ const DateTimeStep = ({ onNext, onBack, initialData }: DateTimeStepProps) => {
               Escolha o horário
             </h3>
 
-            <div className="grid gap-6 md:grid-cols-6">
+            <div className="grid grid-cols-5 gap-3 md:grid-cols-6 md:gap-6">
               {professionalFreeDayTimes.map(item => (
                 <DateTimeCard
                   key={item.time}

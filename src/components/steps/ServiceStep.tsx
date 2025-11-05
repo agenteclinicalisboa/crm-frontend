@@ -55,8 +55,8 @@ const ServiceStep = ({ onNext, onBack, initialData }: ServiceStepProps) => {
       handleNext={handleNext}
       onBack={onBack}
     >
-      <div className="max-h-[43vh] overflow-auto">
-        <div className="m-3 grid gap-6 md:grid-cols-2">
+      <div className="overflow-auto md:max-h-[43vh]">
+        <div className="m-1 grid gap-3 md:m-3 md:grid-cols-2 md:gap-6">
           {queryProcedureCategory.isLoading ? (
             <>
               {Array(4)

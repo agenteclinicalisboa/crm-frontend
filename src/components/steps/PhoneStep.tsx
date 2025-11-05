@@ -71,17 +71,17 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
   };
 
   return (
-    <div className="mx-auto max-w-md">
-      <Card className="rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
-        <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
-            <PhoneIcon className="h-8 w-8 text-pink-500" />
+    <div className="mx-auto md:max-w-md">
+      <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-4 shadow-lg backdrop-blur-sm md:space-y-6 md:p-8">
+        <div className="space-y-2 text-center md:space-y-4">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 md:h-16 md:w-16">
+            <PhoneIcon className="h-6 w-6 text-pink-500 md:h-8 md:w-8" />
           </div>
           <p className="text-gray-600">Vamos começar com seu número de WhatsApp para confirmar o agendamento</p>
         </div>
 
         <div className="space-y-4">
-          <div>
+          <div className="space-y-2">
             <Label
               htmlFor="phone"
               className="font-medium text-gray-700"
@@ -90,7 +90,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
             </Label>
             <Input
               id="phone"
-              className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
+              className={`rounded-xl border-2 px-4 py-3 md:text-lg ${
                 error.phone ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
               }`}
               type="tel"
@@ -104,7 +104,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
               placeholder="(11) 99999-9999"
               maxLength={15}
             />
-            {error.phone && <p className="mt-2 text-sm text-red-500">{error.phone}</p>}
+            {error.phone && <p className="text-sm text-red-500">{error.phone}</p>}
           </div>
 
           <div className="rounded-xl bg-pink-50 p-4">
@@ -116,7 +116,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
 
         {register && (
           <div className="space-y-4">
-            <div>
+            <div className="space-y-2">
               <Label
                 htmlFor="name"
                 className="font-medium text-gray-700"
@@ -125,7 +125,7 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
               </Label>
               <Input
                 id="name"
-                className={`mt-2 rounded-xl border-2 px-4 py-3 text-lg ${
+                className={`rounded-xl border-2 px-4 py-3 md:text-lg ${
                   error.name ? 'border-red-300' : 'border-gray-200 focus:border-pink-300'
                 }`}
                 value={selected.name}
@@ -139,13 +139,13 @@ const PhoneStep = ({ onNext, initialData }: PhoneStepProps) => {
                   }));
                 }}
               />
-              {error.name && <p className="mt-2 text-sm text-red-500">{error.name}</p>}
+              {error.name && <p className="text-sm text-red-500">{error.name}</p>}
             </div>
           </div>
         )}
 
         <Button
-          className="mt-6 w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl"
+          className="w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl"
           disabled={!selected.phone || (register && !selected.name)}
           onClick={() => {
             void handleNext();

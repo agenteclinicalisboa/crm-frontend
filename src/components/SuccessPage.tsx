@@ -33,10 +33,10 @@ const SuccessPage = ({ bookingData }: Props) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 py-8">
-      <div className="container mx-auto px-6">
-        <div className="mx-auto max-w-2xl">
+      <div className="mx-auto px-6">
+        <div className="mx-auto space-y-6 md:max-w-2xl">
           {/* Success Header */}
-          <div className="mb-8 text-center">
+          <div className="text-center">
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-500 shadow-lg">
               <CheckCircle className="h-10 w-10 text-white" />
             </div>
@@ -45,8 +45,8 @@ const SuccessPage = ({ bookingData }: Props) => {
           </div>
 
           {/* Booking Details */}
-          <Card className="mb-6 rounded-2xl border-0 bg-white/80 p-8 shadow-lg backdrop-blur-sm">
-            <div className="mb-6 text-center">
+          <Card className="space-y-6 rounded-2xl border-0 bg-white/80 p-4 shadow-lg backdrop-blur-sm md:p-6">
+            <div className="text-center">
               <Badge
                 variant="secondary"
                 className="bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 hover:bg-green-100"
@@ -55,9 +55,9 @@ const SuccessPage = ({ bookingData }: Props) => {
               </Badge>
             </div>
 
-            <div className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="flex items-center gap-4 rounded-xl bg-pink-50 p-4">
+            <div className="space-y-4 md:space-y-6">
+              <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+                <div className="flex items-center gap-3 rounded-xl bg-pink-50 p-4 md:gap-4 md:p-6">
                   <Calendar className="h-6 w-6 text-pink-600" />
                   <div>
                     <p className="text-sm text-gray-600">Data</p>
@@ -65,7 +65,7 @@ const SuccessPage = ({ bookingData }: Props) => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 rounded-xl bg-pink-50 p-4">
+                <div className="flex items-center gap-3 rounded-xl bg-pink-50 p-4 md:gap-4 md:p-6">
                   <Clock className="h-6 w-6 text-pink-600" />
                   <div>
                     <p className="text-sm text-gray-600">Horário</p>
@@ -74,7 +74,7 @@ const SuccessPage = ({ bookingData }: Props) => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 rounded-xl bg-rose-50 p-4">
+              <div className="flex items-center gap-3 rounded-xl bg-rose-50 p-4 md:gap-4 md:p-6">
                 <User className="h-6 w-6 text-rose-600" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600">Profissional</p>
@@ -83,8 +83,8 @@ const SuccessPage = ({ bookingData }: Props) => {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-6">
-                <h4 className="mb-3 font-semibold text-gray-800">Tratamento agendado</h4>
+              <div className="space-y-3 rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-4 md:p-6">
+                <h4 className="font-semibold text-gray-800">Tratamento agendado</h4>
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-gray-800">{bookingData.service.name}</p>
@@ -97,11 +97,12 @@ const SuccessPage = ({ bookingData }: Props) => {
           </Card>
 
           {/* Next Steps */}
-          <Card className="mb-6 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm">
-            <h3 className="mb-4 text-lg font-semibold text-gray-800">Próximos passos</h3>
+          <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-4 shadow-lg backdrop-blur-sm md:p-6">
+            <h3 className="text-lg font-semibold text-gray-800">Próximos passos</h3>
+
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <MessageCircle className="mt-1 h-5 w-5 text-green-600" />
+              <div className="flex items-start gap-3 space-y-1">
+                <MessageCircle className="mt-2 h-6 w-6 text-green-600" />
                 <div>
                   <p className="font-medium text-gray-800">Confirmação por WhatsApp</p>
                   <p className="text-sm text-gray-600">
@@ -110,16 +111,16 @@ const SuccessPage = ({ bookingData }: Props) => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <Calendar className="mt-1 h-5 w-5 text-blue-600" />
+              <div className="flex items-start gap-3 space-y-1">
+                <Calendar className="mt-2 h-6 w-6 text-blue-600" />
                 <div>
                   <p className="font-medium text-gray-800">Lembrete automático</p>
                   <p className="text-sm text-gray-600">Você receberá um lembrete 24h antes do seu agendamento</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <Phone className="mt-1 h-5 w-5 text-purple-600" />
+              <div className="flex items-start gap-3 space-y-1">
+                <Phone className="mt-2 h-6 w-6 text-purple-600" />
                 <div>
                   <p className="font-medium text-gray-800">Dúvidas?</p>
                   <p className="text-sm text-gray-600">Entre em contato conosco pelo WhatsApp: (21) 99999-9999</p>
@@ -129,8 +130,8 @@ const SuccessPage = ({ bookingData }: Props) => {
           </Card>
 
           {/* Important Info */}
-          <Card className="mb-6 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-6 shadow-lg">
-            <h4 className="mb-3 font-semibold text-amber-800">Informações importantes</h4>
+          <Card className="space-y-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-4 shadow-lg md:p-6">
+            <h4 className="font-semibold text-amber-800">Informações importantes</h4>
             <div className="space-y-2 text-sm text-amber-700">
               <p>• Chegue com 10 minutos de antecedência</p>
               <p>• Traga um documento com foto</p>
@@ -140,7 +141,7 @@ const SuccessPage = ({ bookingData }: Props) => {
           </Card>
 
           {/* Actions */}
-          <div className="flex flex-col gap-4 sm:flex-row">
+          <div className="flex flex-col gap-2 sm:flex-row md:gap-4">
             <Button
               className="!hover:bg-transparent flex-1 rounded-xl border-gray-300 !bg-transparent py-3 font-semibold text-gray-600 transition-all duration-300 hover:border-gray-400"
               variant="outline"
@@ -164,7 +165,7 @@ const SuccessPage = ({ bookingData }: Props) => {
           </div>
 
           {/* Footer Message */}
-          <div className="mt-8 text-center">
+          <div className="text-center">
             <p className="text-gray-600">Nos vemos em breve! ✨</p>
           </div>
         </div>

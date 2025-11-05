@@ -14,8 +14,8 @@ interface Props {
 
 const Step = ({ title, icon, canNext, children, handleNext, onBack }: Props) => {
   return (
-    <div className="mx-auto max-w-7xl">
-      <Card className="space-y-4 rounded-2xl border-0 bg-white/80 p-6 shadow-lg backdrop-blur-sm">
+    <div className="mx-auto md:max-w-7xl">
+      <Card className="space-y-2 rounded-2xl border-0 bg-white/80 p-4 shadow-lg backdrop-blur-sm md:space-y-4 md:p-6">
         <div className="space-y-3 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100">
             {icon}

@@ -27,33 +27,31 @@ const ProcedureCard = ({ item, selected, showDetails, onSelect }: Props) => {
         onSelect();
       }}
     >
-      <Card className="h-full rounded-2xl border-0 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-xl">
-        <div className="space-y-3">
-          <h3 className="text-xl font-semibold text-gray-800">{item.name}</h3>
+      <Card className="h-full space-y-2 rounded-2xl border-0 bg-white p-4 shadow-md transition-all duration-300 hover:shadow-xl md:space-y-4 md:p-6">
+        <div className="space-y-2 md:space-y-3">
+          <h3 className="font-semibold text-gray-800 md:text-xl">{item.name}</h3>
 
           <p className="text-sm leading-relaxed text-gray-600">{item.description}</p>
 
           {showDetails && (
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Badge
-                  className="bg-pink-100 text-pink-700 hover:bg-pink-100"
-                  variant="secondary"
-                >
-                  <ClockIcon className="mr-1 h-3 w-3" />
-                  {formatDuration(item.duration)}
-                </Badge>
-              </div>
+              <Badge
+                className="bg-pink-100 text-pink-700 hover:bg-pink-100"
+                variant="secondary"
+              >
+                <ClockIcon className="mr-1 h-3 w-3" />
+                {formatDuration(item.duration)}
+              </Badge>
 
               <div className="text-right">
-                <p className="text-2xl font-bold text-pink-600">{currency(item.value)}</p>
+                <p className="text-xl font-bold text-pink-600 md:text-2xl">{currency(item.value)}</p>
               </div>
             </div>
           )}
         </div>
 
         {selected?.id === item.id && (
-          <div className="mt-4 rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-3">
+          <div className="rounded-xl border border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 p-3">
             <p className="text-center text-sm font-medium text-pink-700">✨ Tratamento selecionado</p>
           </div>
         )}

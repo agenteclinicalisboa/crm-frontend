@@ -9,7 +9,7 @@ interface Props {
 const StepIndicator = ({ currentStep, totalSteps, stepTitles }: Props) => {
   return (
     <div className="w-full space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between py-2 overflow-auto">
         {Array.from({ length: totalSteps }, (_, index) => {
           const stepNumber = index + 1;
           const isCompleted = stepNumber < currentStep;
